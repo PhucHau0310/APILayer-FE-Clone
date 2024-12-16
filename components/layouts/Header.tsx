@@ -7,6 +7,7 @@ import React from 'react';
 import { useClickOutside } from '@/hooks/useClickOutSide';
 import Link from 'next/link';
 import SignIn from '../items/auth/SignIn';
+import FAQ from '@/app/faq/page';
 
 const Menu = [
     {
@@ -34,11 +35,11 @@ const Menu = [
         subsMenu: [
             {
                 title: 'Github',
-                link: 'https://github.com/PhucHau0310/APILayer-BE',
+                link: 'https://github.com/silverineVN',
             },
             {
                 title: 'Discord',
-                link: 'https://discord.com',
+                link: '/discord',
             },
         ],
     },
