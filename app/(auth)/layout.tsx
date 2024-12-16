@@ -1,5 +1,6 @@
 import Header from '../../components/layouts/Header';
 import Footer from '../../components/layouts/Footer';
+import React from 'react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
     return (
-        <div className="bg-green-300">
+        <div className="bg-white">
             <Header />
             {children}
             <Footer />

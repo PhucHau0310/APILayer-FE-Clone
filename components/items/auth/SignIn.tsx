@@ -50,7 +50,7 @@ const SignIn: React.FC<SignInProps> = ({ isVisible, onClose }) => {
             <div className="flex flex-col gap-4">
                 <Link
                     href={'/sign-in'}
-                    className="border w-2/3 mx-auto text-center py-1.5 rounded-md"
+                    className="border w-2/3 mx-auto text-center py-1.5 rounded-md hover:bg-blue-100"
                 >
                     <FontAwesomeIcon
                         icon={faGoogle}
@@ -62,7 +62,7 @@ const SignIn: React.FC<SignInProps> = ({ isVisible, onClose }) => {
                 </Link>
                 <Link
                     href={'/sign-in'}
-                    className="border w-2/3 mx-auto text-center py-1.5 rounded-md"
+                    className="border w-2/3 mx-auto text-center py-1.5 rounded-md hover:bg-blue-100"
                 >
                     <FontAwesomeIcon
                         icon={faGithub}
@@ -74,7 +74,7 @@ const SignIn: React.FC<SignInProps> = ({ isVisible, onClose }) => {
                 </Link>
                 <Link
                     href={'/sign-in'}
-                    className="border w-2/3 mx-auto text-center py-1.5 rounded-md"
+                    className="border w-2/3 mx-auto text-center py-1.5 rounded-md hover:bg-blue-100"
                 >
                     <FontAwesomeIcon
                         icon={faFacebook}
