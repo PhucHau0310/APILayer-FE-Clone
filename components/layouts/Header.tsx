@@ -7,13 +7,11 @@ import React from 'react';
 import { useClickOutside } from '@/hooks/useClickOutSide';
 import Link from 'next/link';
 import SignIn from '../items/auth/SignIn';
-import FAQ from '@/app/faq/page';
-
 
 const Menu = [
     {
         title: 'Marketplace',
-        link: '/market-place',
+        link: '/marketplace',
         subsMenu: null,
     },
     {
@@ -36,7 +34,7 @@ const Menu = [
         subsMenu: [
             {
                 title: 'Github',
-                link: 'https://github.com/silverineVN',
+                link: 'https://github.com/PhucHau0310/APILayer-BE',
             },
             {
                 title: 'Discord',
@@ -80,6 +78,7 @@ const Header = () => {
                         return (
                             <Link
                                 key={item.title}
+                                target="_blank"
                                 href="https://github.com/PhucHau0310/APILayer-FE"
                                 className="flex items-center gap-1 px-1 py-0.5 cursor-pointer"
                             >
@@ -119,6 +118,7 @@ const Header = () => {
                                         return (
                                             <Link
                                                 key={subItem.title}
+                                                target="_blank"
                                                 href={subItem.link ?? '/'}
                                                 className="p-2 hover:text-[#0052cc]"
                                             >

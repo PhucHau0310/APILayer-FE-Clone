@@ -2,12 +2,11 @@
 
 import Header from '../../components/layouts/Header';
 import Footer from '../../components/layouts/Footer';
-// import type { Metadata } from 'next';
-import Intergrate from '@/components/items/root/Intergrate';
 import useScrollToTop from '@/hooks/useScrollToTop';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
+// import type { Metadata } from 'next';
 
 // export const metadata: Metadata = {
 //     title: 'API Layer',
@@ -20,7 +19,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <div className="bg-white relative">
             <Header />
-            <Intergrate />
             {children}
             <Footer />
 
