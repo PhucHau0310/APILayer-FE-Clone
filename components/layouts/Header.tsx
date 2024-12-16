@@ -6,6 +6,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import React from 'react';
 import { useClickOutside } from '@/hooks/useClickOutSide';
 import Link from 'next/link';
+import SignIn from '../items/auth/SignIn';
 
 const Menu = [
     {
@@ -51,6 +52,7 @@ const Menu = [
 const Header = () => {
     const [isClickMenu, setClickMenu] = React.useState<string | null>(null);
     const menuRef = React.useRef<HTMLDivElement>(null);
+    const [isClickSignIn, setClickSignIn] = React.useState(false);
 
     useClickOutside(menuRef, () => {
         setClickMenu(null);
@@ -130,13 +132,27 @@ const Header = () => {
             </div>
 
             <div>
-                <button className="font-semibold bg-[#f0f0f0] border border-[#f0f0f0] p-2 rounded-md mr-2 hover:shadow-md hover:shadow-[#37C625] transform transition-all">
+                <Link
+                    href={'/sign-up'}
+                    className="font-semibold bg-[#f0f0f0] border border-[#f0f0f0] px-2.5 py-3 rounded-md mr-2 hover:shadow-md hover:shadow-[#37C625] transform transition-all"
+                >
                     Sign Up
-                </button>
-                <button className="text-white font-semibold bg-[#0052CC] border border-[#2480FC] p-2 rounded-md">
+                </Link>
+                <button
+                    className="text-white font-semibold bg-[#0052CC] border border-[#2480FC] p-2 rounded-md"
+                    onClick={() => setClickSignIn(true)}
+                >
                     Start Building
                 </button>
             </div>
+
+            {/* Form Sign In */}
+            {isClickSignIn && (
+                <SignIn
+                    isVisible={isClickSignIn}
+                    onClose={() => setClickSignIn(false)}
+                />
+            )}
         </header>
     );
 };
