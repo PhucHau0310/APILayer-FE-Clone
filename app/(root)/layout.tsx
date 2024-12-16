@@ -7,6 +7,7 @@ import Intergrate from '@/components/items/root/Intergrate';
 import useScrollToTop from '@/hooks/useScrollToTop';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
 
 // export const metadata: Metadata = {
 //     title: 'API Layer',

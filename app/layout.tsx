@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
+import LoadingBar from '@/components/LoadingBar';
 config.autoAddCss = false;
 
 const geistSans = Geist({
@@ -30,6 +31,7 @@ export default function RootLayout({
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
+                <LoadingBar />
                 {children}
             </body>
         </html>
