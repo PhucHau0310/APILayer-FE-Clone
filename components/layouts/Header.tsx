@@ -13,7 +13,7 @@ import FAQ from '@/app/faq/page';
 const Menu = [
     {
         title: 'Marketplace',
-        link: '/market-place',
+        link: '/marketplace',
         subsMenu: null,
     },
     {
