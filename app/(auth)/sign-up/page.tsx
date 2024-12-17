@@ -1,3 +1,8 @@
+'use client';
+
+import Alert from '@/components/Alert';
+import useAlert from '@/hooks/useAlert';
+import useLoading from '@/hooks/useLoading';
 import {
     faFacebook,
     faGithub,
@@ -5,10 +10,73 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import React from 'react';
 
 const SignUp = () => {
+    const [username, setUsername] = React.useState<string | null>(null);
+    const [email, setEmail] = React.useState<string | null>(null);
+    const [password, setPassword] = React.useState<string | null>(null);
+    const { alert, showAlert, hideAlert } = useAlert();
+    const [loading, startLoading, stopLoading] = useLoading();
+    const router = useRouter();
+
+    const handlerRegister = async (
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
+        startLoading();
+        try {
+            e.preventDefault();
+            // console.log({ username, email, password });
+
+            if (!username || !email || !password) {
+                showAlert('Please fill in all fields', 'error');
+                return;
+            }
+
+            const dataReq = {
+                username,
+                email,
+                password,
+            };
+
+            const res = await fetch(
+                `https://localhost:7036/api/Auth/register`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(dataReq),
+                }
+            );
+
+            const { message } = await res.json();
+
+            if (res.ok) {
+                showAlert(message, 'success');
+                setEmail(null);
+                setPassword(null);
+                setUsername(null);
+
+                setTimeout(() => {
+                    router.push('/sign-in');
+                }, 3000);
+            } else {
+                showAlert(message, 'error');
+            }
+        } catch (error) {
+            console.log(error);
+            showAlert('An error occurred during registration', 'error');
+        } finally {
+            stopLoading();
+        }
+    };
+
     return (
         <div className="max-w-md mx-auto pt-8 pb-32">
+            <Alert alert={alert} onClose={hideAlert} />
+
             <div className="p-5">
                 <h2 className="text-3xl font-bold text-black text-center">
                     Welcome to APILayer
@@ -67,6 +135,8 @@ const SignUp = () => {
                         Username
                     </label>
                     <input
+                        value={username ?? ''}
+                        onChange={(e) => setUsername(e.target.value)}
                         type="text"
                         placeholder="Username"
                         className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -78,6 +148,8 @@ const SignUp = () => {
                         Email
                     </label>
                     <input
+                        value={email ?? ''}
+                        onChange={(e) => setEmail(e.target.value)}
                         type="email"
                         placeholder="Email address"
                         className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -89,16 +161,19 @@ const SignUp = () => {
                         Password
                     </label>
                     <input
+                        value={password ?? ''}
+                        onChange={(e) => setPassword(e.target.value)}
                         type="password"
                         placeholder="********"
                         className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
                 </div>
                 <button
+                    onClick={(e) => handlerRegister(e)}
                     type="submit"
                     className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
                 >
-                    Sign Up For Free
+                    {loading ? 'Loading...' : 'Sign Up For Free'}
                 </button>
             </form>
 
