@@ -6,12 +6,6 @@ import useScrollToTop from '@/hooks/useScrollToTop';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
-// import type { Metadata } from 'next';
-
-// export const metadata: Metadata = {
-//     title: 'API Layer',
-//     description: 'Marketplace for APIs',
-// };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
     const { isVisible, scrollToTop } = useScrollToTop(200);
