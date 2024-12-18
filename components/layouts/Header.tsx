@@ -100,7 +100,7 @@ const menuAccount = [
     {
         icon: faRightFromBracket,
         tite: 'Log out',
-        link: '/',
+        link: '/provider',
     },
 ];
 
@@ -110,10 +110,11 @@ const Header = () => {
     const [isClickSignIn, setClickSignIn] = React.useState(false);
     const [isLogined, setLogined] = React.useState(false);
     const [isHoverAccount, setHoverAccount] = React.useState(false);
+    const [username, setUsername] = React.useState<string | null>(null);
     const router = useRouter();
-    const { data, loading } = useUser();
-
-    console.log(data);
+    const { data, loading, error } = useUser(
+        `https://localhost:7036/api/User/get-user-by-name?username=${username}`
+    );
 
     useClickOutside(menuRef, () => {
         setClickMenu(null);
@@ -122,6 +123,10 @@ const Header = () => {
     React.useEffect(() => {
         if (localStorage.getItem('accessToken')) {
             setLogined(true);
+        }
+
+        if (localStorage.getItem('username')) {
+            setUsername(localStorage.getItem('username'));
         }
     }, []);
 
@@ -217,7 +222,7 @@ const Header = () => {
                     >
                         <div className="flex flex-row items-center gap-2">
                             <FontAwesomeIcon icon={faCircleUser} size="2x" />
-                            <span>Hi, {loading ? '...' : data?.username}</span>
+                            <span>Hi, {data?.username}</span>
                         </div>
 
                         {isHoverAccount && (
