@@ -131,10 +131,14 @@ const SignUp = () => {
 
             <form className="px-5 py-3 text-black">
                 <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">
+                    <label
+                        htmlFor="username"
+                        className="block text-gray-700 text-sm font-bold mb-2"
+                    >
                         Username
                     </label>
                     <input
+                        id="username"
                         value={username ?? ''}
                         onChange={(e) => setUsername(e.target.value)}
                         type="text"
@@ -144,10 +148,14 @@ const SignUp = () => {
                 </div>
 
                 <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">
+                    <label
+                        htmlFor="email"
+                        className="block text-gray-700 text-sm font-bold mb-2"
+                    >
                         Email
                     </label>
                     <input
+                        id="email"
                         value={email ?? ''}
                         onChange={(e) => setEmail(e.target.value)}
                         type="email"
@@ -157,10 +165,14 @@ const SignUp = () => {
                 </div>
 
                 <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">
+                    <label
+                        htmlFor="pass"
+                        className="block text-gray-700 text-sm font-bold mb-2"
+                    >
                         Password
                     </label>
                     <input
+                        id="pass"
                         value={password ?? ''}
                         onChange={(e) => setPassword(e.target.value)}
                         type="password"

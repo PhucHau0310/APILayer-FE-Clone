@@ -1,12 +1,25 @@
 'use client';
 
-import { faAngleDown, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
+import {
+    faAngleDown,
+    faCircleQuestion,
+    faCircleUser,
+    faCode,
+    faCreditCard,
+    faLayerGroup,
+    faListCheck,
+    faMoneyBill,
+    faRightFromBracket,
+    faUser,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import React from 'react';
 import { useClickOutside } from '@/hooks/useClickOutSide';
 import Link from 'next/link';
 import SignIn from '../items/auth/SignIn';
+import { useRouter } from 'next/navigation';
+import useUser from '@/hooks/useUser';
 
 const Menu = [
     {
@@ -49,14 +62,77 @@ const Menu = [
     },
 ];
 
+const menuAccount = [
+    {
+        icon: faCode,
+        tite: 'MyApis',
+        link: '/provider',
+    },
+    {
+        icon: faListCheck,
+        tite: 'Subscriptions',
+        link: '/subscriptions',
+    },
+    {
+        icon: faUser,
+        tite: 'Account',
+        link: '/account',
+    },
+    {
+        icon: faMoneyBill,
+        tite: 'Purchase history',
+        link: '/purchases',
+    },
+    {
+        icon: faCreditCard,
+        tite: 'Payment methods',
+        link: '/payment',
+    },
+    {
+        icon: faCircleQuestion,
+        tite: 'Supports',
+        link: '/support',
+    },
+    {
+        icon: faRightFromBracket,
+        tite: 'Log out',
+        link: '/provider',
+    },
+];
+
 const Header = () => {
     const [isClickMenu, setClickMenu] = React.useState<string | null>(null);
     const menuRef = React.useRef<HTMLDivElement>(null);
     const [isClickSignIn, setClickSignIn] = React.useState(false);
+    const [isLogined, setLogined] = React.useState(false);
+    const [isHoverAccount, setHoverAccount] = React.useState(false);
+    const [username, setUsername] = React.useState<string | null>(null);
+    const router = useRouter();
+    const { data, loading, error } = useUser(
+        `https://localhost:7036/api/User/get-user-by-name?username=${username}`
+    );
 
     useClickOutside(menuRef, () => {
         setClickMenu(null);
     });
+
+    React.useEffect(() => {
+        if (localStorage.getItem('accessToken')) {
+            setLogined(true);
+        }
+
+        if (localStorage.getItem('username')) {
+            setUsername(localStorage.getItem('username'));
+        }
+    }, []);
+
+    const hanldeLogOut = () => {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('username');
+        setLogined(false);
+
+        router.push('/');
+    };
 
     return (
         <header className="z-50 flex items-center justify-between bg-white text-[#27344A] max-w-4xl mx-auto sticky top-5 px-3 py-2 rounded-md shadow-lg">
@@ -134,18 +210,90 @@ const Header = () => {
             </div>
 
             <div>
-                <Link
-                    href={'/sign-up'}
-                    className="font-semibold bg-[#f0f0f0] border border-[#f0f0f0] px-2.5 py-3 rounded-md mr-2 hover:shadow-md hover:shadow-[#37C625] transform transition-all"
-                >
-                    Sign Up
-                </Link>
-                <button
-                    className="text-white font-semibold bg-[#0052CC] border border-[#2480FC] p-2 rounded-md"
-                    onClick={() => setClickSignIn(true)}
-                >
-                    Start Building
-                </button>
+                {isLogined ? (
+                    <div
+                        onMouseEnter={() => setHoverAccount(true)}
+                        onMouseLeave={() => setHoverAccount(false)}
+                        className="mr-2 p-1 hover:cursor-pointer transition-all duration-500 relative"
+                    >
+                        <div className="flex flex-row items-center gap-2">
+                            <FontAwesomeIcon icon={faCircleUser} size="2x" />
+                            <span>Hi, {data?.username}</span>
+                        </div>
+
+                        {isHoverAccount && (
+                            <div className="bg-white absolute top-10 right-0 rounded-md text-[#27344a] shadow-md w-52">
+                                <div className="px-6 py-4 border-b border-b-[#27344a]">
+                                    <FontAwesomeIcon
+                                        icon={faCircleUser}
+                                        size="2x"
+                                    />
+                                    <h2 className="font-semibold text-base mt-2">
+                                        {data?.username}
+                                    </h2>
+                                    <h2 className="text-sm mt-0.5">
+                                        {data?.email}
+                                    </h2>
+                                </div>
+
+                                <div className="px-6 py-4">
+                                    {menuAccount.map((item) => {
+                                        if (item.tite === 'Log out') {
+                                            return (
+                                                <div
+                                                    onClick={() =>
+                                                        hanldeLogOut()
+                                                    }
+                                                    key={item.tite}
+                                                    className="flex flex-row items-center gap-3 mb-3 text-sm hover:text-blue-400"
+                                                >
+                                                    <FontAwesomeIcon
+                                                        icon={item.icon}
+                                                        size="1x"
+                                                    />
+                                                    <span className="">
+                                                        {item.tite}
+                                                    </span>
+                                                </div>
+                                            );
+                                        }
+
+                                        return (
+                                            <Link
+                                                href={item.link}
+                                                key={item.tite}
+                                                className="flex flex-row items-center gap-3 mb-3 text-sm hover:text-blue-400"
+                                            >
+                                                <FontAwesomeIcon
+                                                    icon={item.icon}
+                                                    size="1x"
+                                                />
+                                                <span className="">
+                                                    {item.tite}
+                                                </span>
+                                            </Link>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    <>
+                        <Link
+                            href={'/sign-up'}
+                            className="font-semibold bg-[#f0f0f0] border border-[#f0f0f0] px-2.5 py-3 rounded-md mr-2 hover:shadow-md hover:shadow-[#37C625] transform transition-all"
+                        >
+                            Sign Up
+                        </Link>
+                        <button
+                            className="text-white font-semibold bg-[#0052CC] border border-[#2480FC] p-2 rounded-md"
+                            onClick={() => setClickSignIn(true)}
+                        >
+                            Start Building
+                        </button>
+                    </>
+                )}
             </div>
 
             {/* Form Sign In */}
