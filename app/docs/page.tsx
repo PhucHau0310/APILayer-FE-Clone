@@ -14,9 +14,9 @@ export default function DocsPage() {
                             {/* Input */}
                             <form className="input-group input-group-merge mb-3" action="/docs/problemlist/search" method="GET">
                                 <div className="input-group-prepend">
-                  <span className="input-group-text" id="askQuestions">
-                    <i className="fas fa-search"></i>
-                  </span>
+                                    <span className="input-group-text" id="askQuestions">
+                                        <i className="fas fa-search"></i>
+                                    </span>
                                 </div>
                                 <input
                                     type="text"
@@ -69,8 +69,7 @@ export default function DocsPage() {
                                 href: '/docs/problemlist/account',
                                 icon: 'https://apilayer.com/assets/svg/icons/icon-46.svg',
                                 title: 'Account',
-                                description:
-                                    'Manage passwords, communication preferences, API keys and payment methods.',
+                                description: 'Manage passwords, communication preferences, API keys and payment methods.',
                                 articles: '5 articles in this collection',
                             },
                             {
@@ -84,16 +83,14 @@ export default function DocsPage() {
                                 href: '/docs/problemlist/getting-started',
                                 icon: 'https://apilayer.com/assets/svg/icons/icon-1.svg',
                                 title: 'Introduction',
-                                description:
-                                    'Everything you need to know to start engaging with APILayer Marketplace.',
+                                description: 'Everything you need to know to start engaging with APILayer Marketplace.',
                                 articles: '2 articles in this collection',
                             },
                             {
                                 href: '/docs/problemlist/subscription',
                                 icon: 'https://apilayer.com/assets/svg/icons/icon-39.svg',
                                 title: 'Subscription',
-                                description:
-                                    'Learn how to subscribe to an API, manage your subscription plans, monitor your rate limits.',
+                                description: 'Learn how to subscribe to an API, manage your subscription plans, monitor your rate limits.',
                                 articles: '5 articles in this collection',
                             },
                             {
@@ -103,8 +100,8 @@ export default function DocsPage() {
                                 description: 'Useful tips and tricks in order to excel our services',
                                 articles: '2 articles in this collection',
                             },
-                        ].map(({ href, icon, title, description, articles }) => (
-                            <div className="col-lg-6 mb-3 mb-lg-5" key={title}>
+                        ].map(({ href, icon, title, description, articles }, index) => (
+                            <div className="col-lg-6 mb-3 mb-lg-5" key={index}>
                                 <a className="card card-frame h-100" href={href}>
                                     <div className="card-body">
                                         <div className="media d-block d-sm-flex">
@@ -135,8 +132,7 @@ export default function DocsPage() {
                 <div className="row">
                     {[
                         {
-                            icon: '\n' +
-                                'https://apilayer.com/assets/svg/icons/icon-21.svg',
+                            icon: 'https://apilayer.com/assets/svg/icons/icon-21.svg',
                             title: 'Featured articles',
                             articles: [
                                 { href: '/docs/article/gdpr-compliance', text: 'GDPR Compliance' },
@@ -162,8 +158,8 @@ export default function DocsPage() {
                                 { href: '/docs/problemlist/faq', text: 'FAQs' },
                             ],
                         },
-                    ].map(({ icon, title, articles }) => (
-                        <div className="col-md-4 mb-5 mb-md-0" key={title}>
+                    ].map(({ icon, title, articles }, index) => (
+                        <div className="col-md-4 mb-5 mb-md-0" key={index}>
                             <figure className="w-100 max-w-8rem mb-4">
                                 <img className="img-fluid" src={icon} alt={title} />
                             </figure>
@@ -171,8 +167,8 @@ export default function DocsPage() {
                                 <h3>{title}</h3>
                             </div>
                             <ul className="list-unstyled list-article">
-                                {articles.map(({ href, text }) => (
-                                    <li key={href}>
+                                {articles.map(({ href, text }, subIndex) => (
+                                    <li key={`${index}-${subIndex}`}>
                                         <a className="link-underline" href={href}>
                                             {text}
                                         </a>
