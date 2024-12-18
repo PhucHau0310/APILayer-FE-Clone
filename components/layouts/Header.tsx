@@ -32,6 +32,10 @@ const Menu = [
         link: null,
         subsMenu: [
             {
+            title: 'Docs',
+             link: '/docs',
+            },
+            {
                 title: 'Blogs',
                 link: '/blogs',
             },
