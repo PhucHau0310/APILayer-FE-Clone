@@ -49,10 +49,10 @@ const Footer = () => {
                         <h1 className="text-white text-base font-semibold">
                             Sitemap
                         </h1>
-                        <p>Marketplace</p>
-                        <p>About</p>
+                        <a href="/marketplace">Marketplace</a>
+                        <a href="/about">About</a>
                         <p>API Glossary</p>
-                        <p>Documentation</p>
+                        <a href="/docs">Documentation</a>
                     </div>
 
                     <div className="w-[20%]  text-[#97a1af]">
