@@ -11,31 +11,39 @@ interface User {
     isEmailConfirmed: boolean;
 }
 
-const useUser = (url: string) => {
+const useUser = () => {
     const [data, setData] = React.useState<User | null>(null);
     const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState(null);
 
     React.useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            try {
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.status}`);
-                }
+        const fetchUserData = async () => {
+            const storedUsername = localStorage.getItem('username');
 
-                const result = await response.json();
-                setData(result.data);
-            } catch (err: any) {
-                setError(err.message);
-            } finally {
+            if (storedUsername) {
+                try {
+                    const response = await fetch(
+                        `https://localhost:7036/api/User/get-user-by-name?username=${storedUsername}`
+                    );
+
+                    if (!response.ok) {
+                        throw new Error(`Error: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    setData(result.data);
+                } catch (err: any) {
+                    setError(err.message);
+                } finally {
+                    setLoading(false);
+                }
+            } else {
                 setLoading(false);
             }
         };
 
-        fetchData();
-    }, [url]);
+        fetchUserData();
+    }, []);
 
     return { data, loading, error };
 };
