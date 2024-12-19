@@ -8,7 +8,7 @@ import Link from 'next/link';
 const fakeData = [
     {
         title: 'Developers',
-        subs: '4m',
+        subs: '4M',
     },
     {
         title: 'APIs in the Hub',
@@ -16,7 +16,7 @@ const fakeData = [
     },
     {
         title: 'API calls per month',
-        subs: '5b',
+        subs: '5B',
     },
 ];
 

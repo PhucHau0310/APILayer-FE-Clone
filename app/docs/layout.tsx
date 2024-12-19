@@ -1,18 +1,18 @@
 'use client';
 
-import Header from '../../components/layouts/Header';
+// import Header from '../../components/layouts/Header';
 import Footer from '../../components/layouts/Footer';
 import useScrollToTop from '@/hooks/useScrollToTop';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
+const DocsLayout = ({ children }: { children: React.ReactNode }) => {
     const { isVisible, scrollToTop } = useScrollToTop(200);
 
     return (
         <div className="bg-white relative">
-            <Header />
+            {/*<Header />*/}
             {children}
             <Footer />
 
@@ -32,4 +32,4 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     );
 };
 
-export default RootLayout;
+export default DocsLayout;
