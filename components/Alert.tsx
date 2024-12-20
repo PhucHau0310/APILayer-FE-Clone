@@ -42,7 +42,7 @@ const Alert: React.FC<AlertInterface> = ({ alert, onClose }) => {
 
     return (
         <div
-            className={`fixed top-5 right-2 px-5 py-4 rounded-md shadow-lg flex items-center justify-between w-72 transition-transform duration-500 border ${
+            className={`fixed z-[200] top-5 right-2 px-5 py-4 rounded-md shadow-lg flex items-center justify-between w-72 transition-transform duration-500 border ${
                 alertType.className
             } ${alert.visible ? 'translate-x-0' : 'translate-x-full'}`}
         >

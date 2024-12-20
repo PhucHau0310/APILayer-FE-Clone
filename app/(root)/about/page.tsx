@@ -1,78 +1,67 @@
-import '@/public/styles/theme.css';
+import Image from 'next/image';
+import LightImg from '@/public/img/light.jpg';
+import Link from 'next/link';
 
-export default function WhyChooseApiLayer() {
+const About = () => {
     return (
-        <main id="content" role="main">
-            {/* Hero Section */}
-            <div
-                className="bg-img-hero"
-                style={{ backgroundImage: 'url(https://apilayer.com/assets/svg/components/abstract-shapes-12.svg)' }}
-            >
-                <div className="container space-top-3 space-top-lg-4 space-bottom-2 position-relative z-index-2">
-                    <div className="w-md-80 w-lg-60 text-center mx-md-auto">
-                        <h1>Why choose APILayer?</h1>
-                        <p>APILayer vs other API marketplaces.</p>
-                    </div>
-                </div>
+        <div>
+            <div className="text-center py-36">
+                <h1 className="text-[#1e2022] text-4xl font-semibold">
+                    Why choose APILayer?
+                </h1>
+                <p className="text-[#677788] text-base mt-2">
+                    APILayer vs other API marketplaces.
+                </p>
             </div>
-            {/* End Hero Section */}
 
-            {/* Features Section */}
-            <div className="container space-2">
-                <div className="row justify-content-lg-between">
-                    <div className="col-lg-5 order-lg-2 pl-lg-0">
-                        <div
-                            className="bg-img-hero h-100 min-h-450rem rounded"
-                            style={{ backgroundImage: 'url(https://apilayer.com/assets/img/900x900/img6.jpg)' }}
-                        ></div>
-                    </div>
-
-                    <div className="col-lg-6 order-lg-1">
-                        <div className="pt-8 pb-lg-8">
-                            <div className="row">
-                                <div className="col-12 mb-3 mb-md-5">
-                                    <div className="pr-lg-4">
-                                        <span className="h2 text-primary">Curated</span>
-                                        <p>All APIs are thoroughly reviewed before they are listed.</p>
-                                    </div>
-                                </div>
-
-                                <div className="col-12 mb-3 mb-md-5">
-                                    <div className="pr-lg-4">
-                                        <span className="h2 text-primary">Start Free</span>
-                                        <p>Free plans with no credit card required.</p>
-                                    </div>
-                                </div>
-
-                                <div className="col-12 mb-3 mb-md-5">
-                                    <div className="pr-lg-4">
-                                        <span className="h2 text-primary">Strict Uptime</span>
-                                        <p>On-demand SLA available.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div className="max-w-6xl mx-auto flex flex-row items-center justify-between mb-36">
+                <div>
+                    <h2 className="text-[#0052CC] text-3xl font-semibold">
+                        Curated
+                    </h2>
+                    <p className="text-[#677788] text-lg mt-2 mb-10">
+                        All APIs are thoroughly reviewed before they are listed.
+                    </p>
+                    <h2 className="text-[#0052CC] text-3xl font-semibold">
+                        Start Free
+                    </h2>
+                    <p className="text-[#677788] text-lg mt-2 mb-10">
+                        Free plans with no credit card required.
+                    </p>
+                    <h2 className="text-[#0052CC] text-3xl font-semibold">
+                        Strict Uptime
+                    </h2>
+                    <p className="text-[#677788] text-lg mt-2 mb-10">
+                        On-demand SLA available.
+                    </p>
                 </div>
-            </div>
-            {/* End Features Section */}
 
-            {/* API Catalog Section */}
-            <div className="container space-bottom-2">
-                <div
-                    className="text-center py-6"
-                    style={{ background: 'url(https://apilayer.com/assets/svg/components/abstract-shapes-19.svg) center no-repeat' }}
+                <Image
+                    src={LightImg}
+                    alt="light"
+                    width={500}
+                    height={500}
+                    className="rounded-md"
+                />
+            </div>
+
+            <div className="text-center mb-20">
+                <h2 className="text-[#1e2022] text-3xl font-semibold">
+                    Why not take a look at our API catalog ?
+                </h2>
+                <p className="text-[#677788] text-base mt-2">
+                    Maybe you'll find an API you like {';)'}
+                </p>
+
+                <Link
+                    href={'/'}
+                    className="bg-[#0052CC] inline-flex rounded-md px-6 py-4 mt-8 font-semibold shadow-md hover:shadow-lg hover:shadow-blue-600 transform transition duration-300 hover:-translate-y-2"
                 >
-                    <h2>Why not take a look at our API catalog?</h2>
-                    <p>Maybe you'll find an API you like ;)</p>
-                    <span className="d-block mt-5">
-            <a className="btn btn-primary transition-3d-hover" href="/">
-              Explore
-            </a>
-          </span>
-                </div>
+                    Explore
+                </Link>
             </div>
-            {/* End API Catalog Section */}
-        </main>
+        </div>
     );
-}
+};
+
+export default About;

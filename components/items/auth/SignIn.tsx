@@ -1,6 +1,9 @@
 'use client';
 
+import Alert from '@/components/Alert';
+import useAlert from '@/hooks/useAlert';
 import { useClickOutside } from '@/hooks/useClickOutSide';
+import useLoading from '@/hooks/useLoading';
 import {
     faFacebook,
     faGithub,
@@ -9,6 +12,7 @@ import {
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 interface SignInProps {
@@ -18,12 +22,70 @@ interface SignInProps {
 
 const SignIn: React.FC<SignInProps> = ({ isVisible, onClose }) => {
     const signInRef = React.useRef<HTMLDivElement>(null);
+    const [username, setUsername] = React.useState<string | null>(null);
+    const [password, setPassword] = React.useState<string | null>(null);
+    const { alert, showAlert, hideAlert } = useAlert();
+    const [loading, startLoading, stopLoading] = useLoading();
+    const router = useRouter();
 
     useClickOutside(signInRef, () => {
         if (isVisible) {
             onClose();
         }
     });
+
+    const handleSignIn = async (
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
+        startLoading();
+        try {
+            e.preventDefault();
+
+            if (!username || !password) {
+                showAlert('Please fill in all fields', 'error');
+                return;
+            }
+
+            const dataReq = {
+                username,
+                password,
+            };
+
+            const res = await fetch(`https://localhost:7036/api/Auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(dataReq),
+            });
+
+            const { message, data } = await res.json();
+
+            if (res.ok) {
+                showAlert(message, 'success');
+
+                if (data?.accessToken) {
+                    localStorage.setItem('accessToken', data.accessToken);
+                    localStorage.setItem('username', username);
+                }
+
+                setPassword(null);
+                setUsername(null);
+
+                setTimeout(() => {
+                    router.push('/');
+                    onClose();
+                }, 2000);
+            } else {
+                showAlert(message, 'error');
+            }
+        } catch (error) {
+            console.log(error);
+            showAlert('An error occurred during signin', 'error');
+        } finally {
+            stopLoading();
+        }
+    };
 
     return (
         <div
@@ -32,6 +94,7 @@ const SignIn: React.FC<SignInProps> = ({ isVisible, onClose }) => {
                 isVisible ? 'translate-x-0' : 'translate-x-full'
             }`}
         >
+            <Alert alert={alert} onClose={hideAlert} />
             <div className="p-5">
                 <button
                     className="text-[#71869d] hover:bg-gray-800 hover:text-white px-3 py-1.5 rounded-md transition-all block ml-auto bg-[#f1f3f5]"
@@ -92,12 +155,18 @@ const SignIn: React.FC<SignInProps> = ({ isVisible, onClose }) => {
 
             <form className="px-5 py-3">
                 <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">
-                        Email
+                    <label
+                        htmlFor="username"
+                        className="block text-gray-700 text-sm font-bold mb-2"
+                    >
+                        Username
                     </label>
                     <input
-                        type="email"
-                        placeholder="Email address"
+                        id="username"
+                        value={username ?? ''}
+                        onChange={(e) => setUsername(e.target.value)}
+                        type="text"
+                        placeholder="Username"
                         className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
                 </div>
@@ -110,10 +179,16 @@ const SignIn: React.FC<SignInProps> = ({ isVisible, onClose }) => {
                 </Link>
 
                 <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">
+                    <label
+                        htmlFor="pass"
+                        className="block text-gray-700 text-sm font-bold mb-2"
+                    >
                         Password
                     </label>
                     <input
+                        id="pass"
+                        value={password ?? ''}
+                        onChange={(e) => setPassword(e.target.value)}
                         type="password"
                         placeholder="********"
                         className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -121,9 +196,10 @@ const SignIn: React.FC<SignInProps> = ({ isVisible, onClose }) => {
                 </div>
                 <button
                     type="submit"
+                    onClick={(e) => handleSignIn(e)}
                     className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
                 >
-                    Sign In
+                    {loading ? 'Loading...' : ' Sign In'}
                 </button>
             </form>
 

@@ -32,16 +32,12 @@ const Menu = [
         link: null,
         subsMenu: [
             {
-            title: 'Docs',
-             link: '/docs',
-            },
-            {
                 title: 'Blogs',
                 link: '/blogs',
             },
             {
                 title: 'FAQ',
-                link: '/faq',
+                link: '/docs/listing/faq',
             },
         ],
     },
@@ -112,9 +108,7 @@ const Header = () => {
     const [isHoverAccount, setHoverAccount] = React.useState(false);
     const [username, setUsername] = React.useState<string | null>(null);
     const router = useRouter();
-    const { data, loading, error } = useUser(
-        `https://localhost:7036/api/User/get-user-by-name?username=${username}`
-    );
+    const { data, loading, error } = useUser();
 
     useClickOutside(menuRef, () => {
         setClickMenu(null);
@@ -128,7 +122,7 @@ const Header = () => {
         if (localStorage.getItem('username')) {
             setUsername(localStorage.getItem('username'));
         }
-    }, []);
+    }, [isLogined]);
 
     const hanldeLogOut = () => {
         localStorage.removeItem('accessToken');

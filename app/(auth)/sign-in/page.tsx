@@ -45,7 +45,6 @@ const SignIn = () => {
                 showAlert(message, 'success');
 
                 if (data?.accessToken) {
-                    console.log(data.accessToken);
                     localStorage.setItem('accessToken', data.accessToken);
                     localStorage.setItem('username', username);
                 }

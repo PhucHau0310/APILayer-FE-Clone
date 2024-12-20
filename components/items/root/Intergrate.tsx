@@ -30,9 +30,9 @@ const Intergrate = () => {
 
                 <Link
                     href={'/marketplace'}
-                    className="bg-[#27344a] px-9 pb-5 mt-4 rounded-lg hover:bg-white hover:text-[#27344a] transition-all"
+                    className="bg-[#27344a] px-9 py-3.5 mt-4 rounded-lg hover:bg-white hover:text-[#27344a] transition-all"
                 >
-                    <span className="font-normal text-lg">
+                    <span className="flex items-center font-normal text-lg">
                         Browse API Marketplace
                         <FontAwesomeIcon
                             icon={faArrowRight}
