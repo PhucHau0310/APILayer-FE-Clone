@@ -46,27 +46,46 @@ const Footer = () => {
 
                 <div className="flex flex-row justify-between gap-4 mt-8 pb-36 border-b border-b-[#374151]">
                     <div className="w-[20%] text-[#97a1af] space-y-2">
-                        <h1 className="text-white text-base font-semibold mb-4">Sitemap</h1>
+                        <h1 className="text-white text-base font-semibold mb-4">
+                            Sitemap
+                        </h1>
                         <ul className="space-y-1">
                             <li>
-                                <a href="/marketplace" className="hover:underline">Marketplace</a>
+                                <a
+                                    href="/marketplace"
+                                    className="hover:underline"
+                                >
+                                    Marketplace
+                                </a>
                             </li>
                             <li>
-                                <a href="/about" className="hover:underline">About</a>
+                                <a href="/about" className="hover:underline">
+                                    About
+                                </a>
                             </li>
                             <li>
-                                <span className="cursor-default">API Glossary</span>
+                                <a
+                                    href="/api-glossary"
+                                    className="hover:underline"
+                                >
+                                    API Glossary
+                                </a>
                             </li>
                             <li>
-                                <a href="/docs" className="hover:underline">Documentation</a>
+                                <a href="/docs" className="hover:underline">
+                                    Documentation
+                                </a>
                             </li>
                         </ul>
                     </div>
 
-
                     <div className="w-[20%]  text-[#97a1af]">
-                        <p className="mt-6">Contact Sales</p>
-                        <p>Helpdesk</p>
+                        <a href="/support" className="mt-6 hover:underline">
+                            Contact Sales
+                        </a>
+                        <a href="/support" className="hover:underline block">
+                            Helpdesk
+                        </a>
                     </div>
 
                     <div className="w-[20%]  text-[#97a1af]">
