@@ -11,13 +11,13 @@ const introMenu = [
         icon: faHandsHoldingCircle,
         title: 'GDPR Compliance',
         desc: 'Declaration of our organization to meeting and upholding the principles of the GDPR.',
-        link: '/article/gdpr-compliance',
+        link: '/docs/article/gdpr-compliance',
     },
     {
         icon: faTruckFast,
         title: 'Getting Started',
         desc: 'This is a step-by-step tutorial for getting you familiar with APILayer Marketplace. Learn how to use it and start integrating APIs to your apps.',
-        link: '/article/getting-started',
+        link: '/docs/article/getting-started',
     },
 ];
 

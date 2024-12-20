@@ -9,13 +9,13 @@ const FAQmenu = [
         icon: faBook,
         title: 'Marketplace FAQ',
         desc: 'Search our marketplace FAQ for answers to anything you might ask. About free API services, build API, Upgrade my plane, Latest offer for API, Read more',
-        link: '/article/marketplace-faq',
+        link: '/docs/article/marketplace-faq',
     },
     {
         icon: faBook,
         title: 'Provider FAQ',
         desc: 'Search our Provider FAQ for answers or queries to anything you might ask. About free API services, build API, Upgrade my plane, Latest offer for API, Read more',
-        link: '/article/provider-faq',
+        link: '/docs/article/provider-faq',
     },
 ];
 

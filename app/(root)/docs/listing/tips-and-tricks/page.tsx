@@ -11,13 +11,13 @@ const tipMenu = [
         icon: faTriangleExclamation,
         title: 'Reporting an abuse',
         desc: "We want to keep having a great ecosystem, and we're strict on abuse.",
-        link: '/article/reporting-an-abuse',
+        link: '/docs/article/reporting-an-abuse',
     },
     {
         icon: faHeadset,
         title: 'Asking for support',
         desc: 'APILayer support is at your fingertips to help you. If you have any question, please reach our support team by clicking Support button.',
-        link: '/article/asking-for-support',
+        link: '/docs/article/asking-for-support',
     },
 ];
 

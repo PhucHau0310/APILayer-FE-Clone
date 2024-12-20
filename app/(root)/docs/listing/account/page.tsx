@@ -15,31 +15,31 @@ const accountMenu = [
         icon: faMoneyCheck,
         title: 'Purchase history',
         desc: 'Here you can download your invoices and see your purchase history',
-        link: '/article/purchase-history',
+        link: '/docs/article/purchase-history',
     },
     {
         icon: faUserShield,
         title: 'Managing Passwords',
         desc: 'Security is of paramount importance in APILayer. Your passwords are stored as a SHA256 hash, which is not reversible.',
-        link: '/article/managing-passwords',
+        link: '/docs/article/managing-passwords',
     },
     {
         icon: faEnvelope,
         title: 'Communication Preferences',
         desc: 'We respect your privacy and personal preferences. Tell us how you wish to be contacted.',
-        link: '/article/communication-preferences',
+        link: '/docs/article/communication-preferences',
     },
     {
         icon: faUserShield,
         title: 'Managing API Keys',
         desc: 'API key is used to authenticate requests and essential to use APIs through APILayer. Learn how to manage your API keys and authentication.',
-        link: '/article/purchase-history',
+        link: '/docs/article/purchase-history',
     },
     {
         icon: faMoneyCheck,
         title: 'Managing payment methods',
         desc: 'Manage your payment methods. You can add / remove credit cards easily from this screen. You can also view your existing invoices here.',
-        link: '/article/managing-payment-methods',
+        link: '/docs/article/managing-payment-methods',
     },
 ];
 

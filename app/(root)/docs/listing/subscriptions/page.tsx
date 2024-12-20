@@ -14,31 +14,31 @@ const subsMenu = [
         icon: faBan,
         title: 'Cancelling a subscription',
         desc: 'You may cancel your subscription to an API anytime. Your paid plan subscription will still be valid until the end of your subscription term.',
-        link: '/article/cancelling-a-subscription',
+        link: '/docs/article/cancelling-a-subscription',
     },
     {
         icon: faCircleUp,
         title: 'Upgrading a subscription',
         desc: 'Learn how to manage your subscriptions with one click. Easy upgrade based on your need. Simply select the plan you would like to change to.',
-        link: '/article/upgrading-a-subscription',
+        link: '/docs/article/upgrading-a-subscription',
     },
     {
         icon: faGift,
         title: 'Subscribing to an API',
         desc: 'How to subscribe to a plan. Choose the best subscription plan that matches with your application needs and start using your API immediately.',
-        link: '/article/subscribing-to-an-api',
+        link: '/docs/article/subscribing-to-an-api',
     },
     {
         icon: faCloudDownload,
         title: 'Downgrading a subscription',
         desc: 'Learn how to manage your subscriptions with one click. Easy downgrade based on your need. Simply select the plan you would like to change to.',
-        link: '/article/downgrading-a-subscription',
+        link: '/docs/article/downgrading-a-subscription',
     },
     {
         icon: faClock,
         title: 'Rate limits',
         desc: 'Rate limits define your allowance for the number of API requests in a given time period. Learn how to manage your rate limits on APILayer.',
-        link: '/article/rate-limits',
+        link: '/docs/article/rate-limits',
     },
 ];
 
