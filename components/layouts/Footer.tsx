@@ -17,8 +17,7 @@ const Footer = () => {
                 <div className="flex flex-row justify-between items-center border-b border-b-[#374151] pb-8">
                     <Link
                         href="/"
-                        className="flex items-center gap-2 cursor-pointer"
-                    >
+                        className="flex items-center gap-2 cursor-pointer">
                         <FontAwesomeIcon
                             icon={faLayerGroup}
                             size="2x"
@@ -32,8 +31,7 @@ const Footer = () => {
 
                     <Link
                         href={'/marketplace'}
-                        className="px-4 py-1 bg-white text-[#27344a] rounded-md hover:bg-[#0052cc] hover:text-white transition-all"
-                    >
+                        className="px-4 py-1 bg-white text-[#27344a] rounded-md hover:bg-[#0052cc] hover:text-white transition-all">
                         Browse all APIs{' '}
                         <FontAwesomeIcon
                             icon={faArrowRight}
@@ -49,12 +47,9 @@ const Footer = () => {
                         <h1 className="text-white text-base font-semibold mb-4">
                             Sitemap
                         </h1>
-                        <ul className="space-y-1">
+                        <ul className="space-y-2">
                             <li>
-                                <a
-                                    href="/marketplace"
-                                    className="hover:underline"
-                                >
+                                <a href="/marketplace" className="hover:underline">
                                     Marketplace
                                 </a>
                             </li>
@@ -64,10 +59,7 @@ const Footer = () => {
                                 </a>
                             </li>
                             <li>
-                                <a
-                                    href="/api-glossary"
-                                    className="hover:underline"
-                                >
+                                <a href="/api-glossary" className="hover:underline">
                                     API Glossary
                                 </a>
                             </li>
@@ -76,31 +68,42 @@ const Footer = () => {
                                     Documentation
                                 </a>
                             </li>
+                            <li>
+                                <a href="/support" className="hover:underline">
+                                    Support
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/contact" className="hover:underline">
+                                    Contact
+                                </a>
+                            </li>
+
                         </ul>
                     </div>
 
-                    <div className="w-[20%]  text-[#97a1af]">
-                        <a href="/support" className="mt-6 hover:underline">
-                            Contact Sales
-                        </a>
-                        <a href="/support" className="hover:underline block">
-                            Helpdesk
-                        </a>
-                    </div>
+                    {/*<div className="w-[20%]  text-[#97a1af]">*/}
+                    {/*    <a href="/support" className="mt-6 hover:underline">*/}
+                    {/*        Contact Sales*/}
+                    {/*    </a>*/}
+                    {/*    <a href="/support" className="hover:underline block">*/}
+                    {/*        Helpdesk*/}
+                    {/*    </a>*/}
+                    {/*</div>*/}
 
-                    <div className="w-[20%]  text-[#97a1af]">
+                    <div className="w-[20%] text-[#97a1af]">
                         <h1 className="text-white text-base font-semibold">
                             Connect
                         </h1>
                         <div className="flex flex-row items-center gap-4 mt-3">
-                            <Link href={'/'}>
+                            <Link href={'https://instagram.com'}>
                                 <FontAwesomeIcon
                                     icon={faInstagram}
                                     size="1x"
                                     color="white"
                                 />
                             </Link>
-                            <Link href={'/'}>
+                            <Link href={'https://facebook.com/'}>
                                 <FontAwesomeIcon
                                     icon={faFacebook}
                                     size="1x"
@@ -116,7 +119,7 @@ const Footer = () => {
                                     className="cursor-pointer"
                                 />
                             </Link>
-                            <Link href={'/'}>
+                            <Link href={'https://x.com'}>
                                 <FontAwesomeIcon
                                     icon={faTwitter}
                                     size="1x"
@@ -124,7 +127,7 @@ const Footer = () => {
                                     className="cursor-pointer"
                                 />
                             </Link>
-                            <Link href={'/'}>
+                            <Link href={'https://youtube.com'}>
                                 <FontAwesomeIcon
                                     icon={faYoutube}
                                     size="1x"
@@ -132,7 +135,7 @@ const Footer = () => {
                                     className="cursor-pointer"
                                 />
                             </Link>
-                            <Link href={'/'}>
+                            <Link href={'https://github.com/PhucHau0310/APILayer-BE'}>
                                 <FontAwesomeIcon
                                     icon={faGithub}
                                     size="1x"
