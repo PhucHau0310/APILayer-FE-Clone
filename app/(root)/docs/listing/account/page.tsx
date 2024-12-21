@@ -33,7 +33,7 @@ const accountMenu = [
         icon: faUserShield,
         title: 'Managing API Keys',
         desc: 'API key is used to authenticate requests and essential to use APIs through APILayer. Learn how to manage your API keys and authentication.',
-        link: '/docs/article/purchase-history',
+        link: '/docs/article/managing-api-keys',
     },
     {
         icon: faMoneyCheck,
