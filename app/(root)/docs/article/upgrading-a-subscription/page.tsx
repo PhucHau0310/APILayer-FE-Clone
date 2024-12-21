@@ -38,7 +38,7 @@ const Account = () => {
                     href="/docs"
                     className="hover:opacity-90 flex flex-row items-center gap-2"
                 >
-                    <span className="text-blue-500">Account</span>
+                    <span className="text-blue-500">Subscription</span>
                 </Link>
                 
                 <span>/</span>
@@ -50,35 +50,37 @@ const Account = () => {
                 </Link>
                 <span>/</span>
 
-                <span>Managing API Keys</span>
+                <span>Upgrading a subscription</span>
             </div>
 
             <div className="text-[#677788] mt-10 max-w-screen-lg mx-auto">
                 
 
                 <main id="content" role="main">
-            {/* API Keys */}
+            {/* upgrade */}
             
             <div className="card border p-4 p-md-7 w-lg-80 mx-lg-auto" data-bis-skin-checked="1">
             <h1 className="text-[#1e2022] font-semibold text-3xl">
-           Managing API Keys
+            Upgrading a subscription
                 </h1>
 
                 <article>
-                    <p>API keys are the essential authentication mechanism to use an API in APILayer. The API key should be sent as a header called <code>apikey</code>.</p>
-                    <p>You can manage your API key on <a href="https://apilayer.com/account">Account Page</a>.</p>
+                    <p><br/>You can easily upgrade your subscription from the "API Detail" page by clicking the "Manage Subscription" button.</p>
+                    <p><img src="https://assets.apilayer.com/docs/api-detail-free-plan-9dsnsd7nini.png"  alt="API Detail Page" className="w-100"/></p>
+                    <p>&nbsp;</p>
+                    <p><br/>Once you click that, you will be brought to the "Plans" page. From here, you can select your desired new plan.</p>
+                    <p><img src="https://assets.apilayer.com/docs/plans-ki7dnu3njn3kmklf3.png"  alt="Plans Page" className="w-100"/></p>
+                    <p>&nbsp;</p>
+                    <p><br/>Once you select your new plan, you will be brought to the "Billing" page. You can enter your billing information here.</p>
+                    <p><img src="https://assets.apilayer.com/docs/api-checkout-wef8323jmww.png"  alt="Billing Page" className="w-100"/></p>
+                    <p><br/>After clicking the "Complete Order," the subscription will be activated, and you will see the "Subscription successful" page.</p>
+                    <p><img src="https://assets.apilayer.com/docs/api-success-82jafedereeivbn.png"  alt="Subscription Successful" className="w-100"/></p>
+                    <p><br/>You can view your subscription status.</p>
+                    <p><img src="https://assets.apilayer.com/docs/api-detail-subscribed-akmsdas8dasnd4522.png"  alt="API Detail Page" className="w-100"/></p>
+                    <p><br/>You can view and manage your subscriptions on the "Subscriptions" page.</p>
+                    <p><img src="https://assets.apilayer.com/docs/subscriptions-page-mi983mfke9jend3.png"  alt="Subscriptions Page" className="w-100"/></p>
 
-                    <b><h2 className="h3 mt-7 text-black">Getting your API key</h2></b>
-                    <p>API key can be found in <a href="https://apilayer.com/account">Account Page</a> under the "Your API Key" section.</p>
-                    <img src="https://assets.apilayer.com/docs/api_key_prompt-api-account-page-mod.png" className="w-100"  alt="prompt-api-account-page"/>
-
-                    <b><h2 className="h3 mt-7 text-black">Generating a new API key</h2></b>
-                    <p>From the same page you can generate a new API key, please note that this action will revoke the previous API key.</p>
-
-                    <b><h2 className="h3 mt-7 text-black">Revoking an API key</h2></b>
-                    <p>To revoke an API key by clicking the "Generate New API Key" button.</p>
-                </article>
-                
+                </article>        
                 
 
                 
@@ -86,7 +88,7 @@ const Account = () => {
             </div>
 
             
-            {/* End API Keys */}
+            {/* End upgrade */}
 
             <div className="text-center border-top border-bottom my-6 py-6" id="feedback-block" data-bis-skin-checked="1">
                 

@@ -66,9 +66,9 @@ const Account = () => {
                 
                 <p>We respect your privacy and personal preferences. Tell us how you wish to be contacted.</p>
                 <article>
-                    <h2 className="h3 mt-7">Privacy</h2>
+                    <b><h2 className="h3 mt-7 text-black">Privacy</h2></b>
                     <p>Your privacy and security are of paramount importance to APILayer. As detailed in our <a href="https://www.ideracorp.com/Legal/gdpr">GDPR Compliance</a> document, we are fully compliant and upholding the principles of the GDPR. We always respect and uphold your privacy; by default, all communication subjects are enabled; however, once you decide which ones you want to keep, you can quickly and permanently change your subscription to the topics we send. Some communications are not affected by this as they are required for the essential operation of the services such as "Forgot Password" emails.</p>
-                    <h2 className="h3 mt-7">Mailing preferences</h2>
+                    <b><h2 className="h3 mt-7 text-black">Mailing preferences</h2></b>
                     <p>Mailing preferences can be set from the <a href="https://apilayer.com/account">Account Page</a>, the "Communication Preferences" section. These settings are directly connected to our emailing platform, and they are activated almost immediately.</p>
                     <p>"Announcements" can include the product or feature updates, company updates as well as new documentation announcements.</p>
                     <p>"New APIs added" is sent out when a new API is available on APILayer.</p>
