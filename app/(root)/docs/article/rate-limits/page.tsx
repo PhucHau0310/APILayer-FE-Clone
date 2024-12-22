@@ -38,7 +38,7 @@ const Account = () => {
                     href="/docs"
                     className="hover:opacity-90 flex flex-row items-center gap-2"
                 >
-                    <span className="text-blue-500">Account</span>
+                    <span className="text-blue-500">Subscription</span>
                 </Link>
                 
                 <span>/</span>
@@ -50,35 +50,36 @@ const Account = () => {
                 </Link>
                 <span>/</span>
 
-                <span>Managing API Keys</span>
+                <span>Rate Limits</span>
             </div>
 
             <div className="text-[#677788] mt-10 max-w-screen-lg mx-auto">
                 
 
                 <main id="content" role="main">
-            {/* API Keys */}
+            {/* Rate Limits */}
             
             <div className="card border p-4 p-md-7 w-lg-80 mx-lg-auto" data-bis-skin-checked="1">
             <h1 className="text-[#1e2022] font-semibold text-3xl">
-           Managing API Keys
+            Rate Limits
                 </h1>
 
                 <article>
-                    <p>API keys are the essential authentication mechanism to use an API in APILayer. The API key should be sent as a header called <code>apikey</code>.</p>
-                    <p>You can manage your API key on <a href="https://apilayer.com/account">Account Page</a>.</p>
+                    <p><br/>Rate limits define your allowance for the number of API requests in a given time period. Learn how to manage your rate limits on APILayer.</p>
+                    <p><br/>Unless otherwise stated, all APIs in the APILayer ecosystem have rate-limiting enabled.</p>
+                    <p><br/>The following headers are sent every time a request is made, showing you the number of requests left in your subscribed plan. </p>
+                    <pre><code className="language-http" lang="http"><br/><b>X-RateLimit-Limit-Day: 1000</b>
+                    <br/><b>X-RateLimit-Limit-Month: 30000</b>
+                    <br/><b>X-RateLimit-Remaining-Day: 997</b>
+                    <br/><b>X-RateLimit-Remaining-Month: 29873</b>
+                    </code></pre>
+                    <p><br/>If you require more/less requests, you can upgrade/downgrade your plan at any time from the <a href="https://apilayer.com/subscriptions">"Subscriptions"</a> page.</p>
+                    <p><br/>Once you reach the limit, the API server sends a response with HTTP code 429.</p>
+                    <p><br/>You can see the usage in the "API Detail" page as well.</p>
+                    <p><img src="https://assets.apilayer.com/docs/api-detail-subscribed-akmsdas8dasnd4522.png"  alt="API Detail Page" className="w-100"/></p>
 
-                    <b><h2 className="h3 mt-7 text-black">Getting your API key</h2></b>
-                    <p>API key can be found in <a href="https://apilayer.com/account">Account Page</a> under the "Your API Key" section.</p>
-                    <img src="https://assets.apilayer.com/docs/api_key_prompt-api-account-page-mod.png" className="w-100"  alt="prompt-api-account-page"/>
-
-                    <b><h2 className="h3 mt-7 text-black">Generating a new API key</h2></b>
-                    <p>From the same page you can generate a new API key, please note that this action will revoke the previous API key.</p>
-
-                    <b><h2 className="h3 mt-7 text-black">Revoking an API key</h2></b>
-                    <p>To revoke an API key by clicking the "Generate New API Key" button.</p>
-                </article>
-                
+          </article>
+                        
                 
 
                 
@@ -86,7 +87,7 @@ const Account = () => {
             </div>
 
             
-            {/* End API Keys */}
+            {/* End Rate Limits */}
 
             <div className="text-center border-top border-bottom my-6 py-6" id="feedback-block" data-bis-skin-checked="1">
                 

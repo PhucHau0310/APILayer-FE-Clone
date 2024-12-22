@@ -38,7 +38,7 @@ const Account = () => {
                     href="/docs"
                     className="hover:opacity-90 flex flex-row items-center gap-2"
                 >
-                    <span className="text-blue-500">Account</span>
+                    <span className="text-blue-500">Subscription</span>
                 </Link>
                 
                 <span>/</span>
@@ -50,35 +50,36 @@ const Account = () => {
                 </Link>
                 <span>/</span>
 
-                <span>Managing API Keys</span>
+                <span>Downgrading a subscription</span>
             </div>
 
             <div className="text-[#677788] mt-10 max-w-screen-lg mx-auto">
                 
 
                 <main id="content" role="main">
-            {/* API Keys */}
+            {/* Downgrading a subscription */}
             
             <div className="card border p-4 p-md-7 w-lg-80 mx-lg-auto" data-bis-skin-checked="1">
             <h1 className="text-[#1e2022] font-semibold text-3xl">
-           Managing API Keys
+            Downgrading a subscription
                 </h1>
 
                 <article>
-                    <p>API keys are the essential authentication mechanism to use an API in APILayer. The API key should be sent as a header called <code>apikey</code>.</p>
-                    <p>You can manage your API key on <a href="https://apilayer.com/account">Account Page</a>.</p>
+                    <p><br/>You can easily upgrade/downgrade your subscription at any time from the "Subscriptions" page by clicking the "Manage" button for relevant API.</p>
+                    <p><img src="https://assets.apilayer.com/docs/subscriptions-page-mi983mfke9jend3.png"  alt="Subscriptions Page" className="w-100"/></p>
+                    <p><br/>Once you clicked the "Manage" button, you will be shown the "Plans" page. Select the plan you want to downgrade to.</p>
+                    <p><img src="https://assets.apilayer.com/docs/plans-page-93jmd8i4j.png"  alt="Plans Page" className="w-100"/></p>
+                    <p><br/>Enter any billing details if they are missing.</p>
+                    <p><img src="https://assets.apilayer.com/docs/api-checkout-wef8323jmww.png"  alt="Billing Page" className="w-100"/></p>
+                    <p>&nbsp;</p>
+                    <p><br/>Click to the "Complete Order" button, and your subscription will be changed.</p>
+                    <p><img src="https://assets.apilayer.com/docs/api-success-82jafedereeivbn.png"  alt="Subscription Successful" className="w-100"/></p>
+                    <p>&nbsp;</p>
+                    <p><br/>As you can see in the "API Detail" page, you are now subscribed to "Free Plan,"</p>
+                    <p><img src="https://assets.apilayer.com/docs/api-detail-page-mf94miwnekr4f.png"  alt="API Detail Page" className="w-100"/></p>
 
-                    <b><h2 className="h3 mt-7 text-black">Getting your API key</h2></b>
-                    <p>API key can be found in <a href="https://apilayer.com/account">Account Page</a> under the "Your API Key" section.</p>
-                    <img src="https://assets.apilayer.com/docs/api_key_prompt-api-account-page-mod.png" className="w-100"  alt="prompt-api-account-page"/>
-
-                    <b><h2 className="h3 mt-7 text-black">Generating a new API key</h2></b>
-                    <p>From the same page you can generate a new API key, please note that this action will revoke the previous API key.</p>
-
-                    <b><h2 className="h3 mt-7 text-black">Revoking an API key</h2></b>
-                    <p>To revoke an API key by clicking the "Generate New API Key" button.</p>
                 </article>
-                
+                        
                 
 
                 
@@ -86,7 +87,7 @@ const Account = () => {
             </div>
 
             
-            {/* End API Keys */}
+            {/* Downgrading a subscription */}
 
             <div className="text-center border-top border-bottom my-6 py-6" id="feedback-block" data-bis-skin-checked="1">
                 
