@@ -5,7 +5,6 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import LoadingBar from '@/components/LoadingBar';
 config.autoAddCss = false;
-
 const geistSans = Geist({
     variable: '--font-geist-sans',
     subsets: ['latin'],
@@ -28,12 +27,11 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-            >
-                <LoadingBar />
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
 
+                <LoadingBar />
                 {children}
+
             </body>
         </html>
     );
