@@ -345,6 +345,11 @@ const Header = () => {
                                             </div>
                                         </div>
                                     </div>
+                                    <div className="py-2 px-4 hover:bg-[#f0f0f0] transition-all duration-300 border-t border-[#f0f0f0]">
+                                        <p className="text-green-500 py-2 text-center">
+                                            See all recent activity
+                                        </p>
+                                    </div>
                                 </div>
                             )}
                         </div>
