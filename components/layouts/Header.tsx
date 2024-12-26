@@ -22,6 +22,12 @@ import Link from 'next/link';
 import SignIn from '../items/auth/SignIn';
 import { useRouter } from 'next/navigation';
 import useUser from '@/hooks/useUser';
+import Img2025 from '@/public/img/png/2025.png';
+import ImgClouds from '@/public/img/png/clouds.png';
+import ImgConfetti from '@/public/img/png/confetti.png';
+import ImgDecoration from '@/public/img/png/decoration.png';
+import ImgFirework from '@/public/img/png/firework.png';
+import ImgRedEnvelope from '@/public/img/png/red-envelope.png';
 
 const Menu = [
     {
@@ -152,10 +158,16 @@ const Header = () => {
                                 key={item.title}
                                 target="_blank"
                                 href="https://github.com/PhucHau0310/APILayer-FE"
-                                className="flex items-center gap-1 px-1 py-0.5 cursor-pointer"
+                                className="flex items-center gap-1 px-1 py-0.5 cursor-pointer relative"
                             >
                                 <FontAwesomeIcon icon={faGithub} size="1x" />
                                 {item.title}
+
+                                <img
+                                    src={Img2025.src}
+                                    alt="img"
+                                    className="absolute bottom-5 -left-5 w-10 h-10"
+                                />
                             </Link>
                         );
                     }
@@ -175,6 +187,20 @@ const Header = () => {
                             }
                         >
                             {item.title}
+
+                            <img
+                                src={
+                                    item.title === 'Marketplace'
+                                        ? ImgClouds.src
+                                        : item.title === 'Resources'
+                                        ? ImgConfetti.src
+                                        : item.title === 'Developers'
+                                        ? ImgDecoration.src
+                                        : ImgFirework.src
+                                }
+                                alt="img"
+                                className="absolute bottom-5 -left-5 w-10 h-10"
+                            />
 
                             {item.subsMenu && (
                                 <FontAwesomeIcon
@@ -213,7 +239,7 @@ const Header = () => {
                             onMouseLeave={() => setHoverAccount(false)}
                             className="mr-2 p-1 hover:cursor-pointer transition-all duration-500 relative"
                         >
-                            <div className="flex flex-row items-center gap-2">
+                            <div className="flex flex-row items-center gap-2 relative">
                                 {data?.avatar ? (
                                     <img
                                         src={data.avatar}
@@ -227,6 +253,12 @@ const Header = () => {
                                     />
                                 )}
                                 <span>Hi, {data?.username}</span>
+
+                                <img
+                                    src={ImgRedEnvelope.src}
+                                    alt="img"
+                                    className="absolute bottom-5 -left-5 w-10 h-10"
+                                />
                             </div>
 
                             {isHoverAccount && (
