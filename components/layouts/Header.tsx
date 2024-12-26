@@ -2,10 +2,12 @@
 
 import {
     faAngleDown,
+    faBell,
     faCircleQuestion,
     faCircleUser,
     faCode,
     faCreditCard,
+    faGear,
     faLayerGroup,
     faListCheck,
     faMoneyBill,
@@ -106,7 +108,7 @@ const Header = () => {
     const [isClickSignIn, setClickSignIn] = React.useState(false);
     const [isLogined, setLogined] = React.useState(false);
     const [isHoverAccount, setHoverAccount] = React.useState(false);
-    const [username, setUsername] = React.useState<string | null>(null);
+    const [isHoverNotification, setHoverNotification] = React.useState(false);
     const router = useRouter();
     const { data, loading, error } = useUser();
 
@@ -118,10 +120,6 @@ const Header = () => {
         if (localStorage.getItem('accessToken')) {
             setLogined(true);
         }
-
-        if (localStorage.getItem('username')) {
-            setUsername(localStorage.getItem('username'));
-        }
     }, [isLogined]);
 
     const hanldeLogOut = () => {
@@ -129,7 +127,7 @@ const Header = () => {
         localStorage.removeItem('username');
         setLogined(false);
 
-        router.push('/');
+        router.push('/sign-in');
     };
 
     return (
@@ -209,39 +207,76 @@ const Header = () => {
 
             <div>
                 {isLogined ? (
-                    <div
-                        onMouseEnter={() => setHoverAccount(true)}
-                        onMouseLeave={() => setHoverAccount(false)}
-                        className="mr-2 p-1 hover:cursor-pointer transition-all duration-500 relative"
-                    >
-                        <div className="flex flex-row items-center gap-2">
-                            <FontAwesomeIcon icon={faCircleUser} size="2x" />
-                            <span>Hi, {data?.username}</span>
-                        </div>
-
-                        {isHoverAccount && (
-                            <div className="bg-white absolute top-10 right-0 rounded-md text-[#27344a] shadow-md w-52">
-                                <div className="px-6 py-4 border-b border-b-[#27344a]">
+                    <div className="flex items-center">
+                        <div
+                            onMouseEnter={() => setHoverAccount(true)}
+                            onMouseLeave={() => setHoverAccount(false)}
+                            className="mr-2 p-1 hover:cursor-pointer transition-all duration-500 relative"
+                        >
+                            <div className="flex flex-row items-center gap-2">
+                                {data?.avatar ? (
+                                    <img
+                                        src={data.avatar}
+                                        alt="avatar"
+                                        className="w-8 h-8 rounded-full"
+                                    />
+                                ) : (
                                     <FontAwesomeIcon
                                         icon={faCircleUser}
                                         size="2x"
                                     />
-                                    <h2 className="font-semibold text-base mt-2">
-                                        {data?.username}
-                                    </h2>
-                                    <h2 className="text-sm mt-0.5">
-                                        {data?.email}
-                                    </h2>
-                                </div>
+                                )}
+                                <span>Hi, {data?.username}</span>
+                            </div>
 
-                                <div className="px-6 py-4">
-                                    {menuAccount.map((item) => {
-                                        if (item.tite === 'Log out') {
+                            {isHoverAccount && (
+                                <div className="bg-white absolute top-10 right-0 rounded-md text-[#27344a] shadow-md w-52">
+                                    <div className="px-6 py-4 border-b border-b-[#27344a]">
+                                        {data?.avatar ? (
+                                            <img
+                                                src={data.avatar}
+                                                alt="avatar"
+                                                className="w-8 h-8 rounded-full"
+                                            />
+                                        ) : (
+                                            <FontAwesomeIcon
+                                                icon={faCircleUser}
+                                                size="2x"
+                                            />
+                                        )}
+                                        <h2 className="font-semibold text-base mt-2">
+                                            {data?.username}
+                                        </h2>
+                                        <h2 className="text-sm mt-0.5">
+                                            {data?.email}
+                                        </h2>
+                                    </div>
+
+                                    <div className="px-6 py-4">
+                                        {menuAccount.map((item) => {
+                                            if (item.tite === 'Log out') {
+                                                return (
+                                                    <div
+                                                        onClick={() =>
+                                                            hanldeLogOut()
+                                                        }
+                                                        key={item.tite}
+                                                        className="flex flex-row items-center gap-3 mb-3 text-sm hover:text-blue-400"
+                                                    >
+                                                        <FontAwesomeIcon
+                                                            icon={item.icon}
+                                                            size="1x"
+                                                        />
+                                                        <span className="">
+                                                            {item.tite}
+                                                        </span>
+                                                    </div>
+                                                );
+                                            }
+
                                             return (
-                                                <div
-                                                    onClick={() =>
-                                                        hanldeLogOut()
-                                                    }
+                                                <Link
+                                                    href={item.link}
                                                     key={item.tite}
                                                     className="flex flex-row items-center gap-3 mb-3 text-sm hover:text-blue-400"
                                                 >
@@ -252,29 +287,67 @@ const Header = () => {
                                                     <span className="">
                                                         {item.tite}
                                                     </span>
-                                                </div>
+                                                </Link>
                                             );
-                                        }
-
-                                        return (
-                                            <Link
-                                                href={item.link}
-                                                key={item.tite}
-                                                className="flex flex-row items-center gap-3 mb-3 text-sm hover:text-blue-400"
-                                            >
-                                                <FontAwesomeIcon
-                                                    icon={item.icon}
-                                                    size="1x"
-                                                />
-                                                <span className="">
-                                                    {item.tite}
-                                                </span>
-                                            </Link>
-                                        );
-                                    })}
+                                        })}
+                                    </div>
                                 </div>
-                            </div>
-                        )}
+                            )}
+                        </div>
+
+                        <div
+                            className="realtive py-2 cursor-pointer"
+                            onMouseEnter={() => setHoverNotification(true)}
+                            onMouseLeave={() => setHoverNotification(false)}
+                        >
+                            <FontAwesomeIcon
+                                icon={faBell}
+                                size="xl"
+                                color="#27344a"
+                                className="ml-2 inline hover:scale-110 transition-all duration-300 cursor-pointer"
+                            />
+                            {isHoverNotification && (
+                                <div className="bg-white shadow-md absolute top-[85%] right-0 w-[260px] rounded-sm transition-all duration-500">
+                                    <div className="bg-red-400 flex flex-row items-center justify-between py-2 px-4 rounded-tl-sm rounded-tr-sm">
+                                        <h3 className="text-white">
+                                            Notifications
+                                        </h3>
+                                        <FontAwesomeIcon
+                                            icon={faGear}
+                                            size="1x"
+                                            color="white"
+                                        />
+                                    </div>
+
+                                    <div className="py-2 px-4 hover:bg-[#f0f0f0] transition-all duration-300">
+                                        <div className="flex flex-row items-center gap-3 py-2">
+                                            <FontAwesomeIcon
+                                                icon={faCircleUser}
+                                                size="2x"
+                                            />
+
+                                            <div>
+                                                <h3>Nguyen Hau</h3>
+                                                <p>4 hours ago</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="py-2 px-4 hover:bg-[#f0f0f0] transition-all duration-300">
+                                        <div className="flex flex-row items-center gap-3 py-2">
+                                            <FontAwesomeIcon
+                                                icon={faCircleUser}
+                                                size="2x"
+                                            />
+
+                                            <div>
+                                                <h3>Nguyen Hau</h3>
+                                                <p>4 hours ago</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 ) : (
                     <>

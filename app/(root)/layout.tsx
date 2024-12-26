@@ -6,16 +6,17 @@ import useScrollToTop from '@/hooks/useScrollToTop';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
-import Snowfall from "@/components/items/snow";
+import SnowEffect from '@/components/items/root/SnowEffect';
+import FireworksCanvas from '@/components/items/root/FireworksCanvas';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
     const { isVisible, scrollToTop } = useScrollToTop(200);
 
     return (
         <div className="bg-white relative">
-            <Header/>
+            <Header />
             {children}
-            <Footer/>
+            <Footer />
 
             {isVisible && (
                 <button
@@ -30,8 +31,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
                 </button>
             )}
             <div className="fixed inset-0 pointer-events-none z-[9999]">
-                <Snowfall/>
+                <SnowEffect />
             </div>
+            {/* <FireworksCanvas /> */}
         </div>
     );
 };

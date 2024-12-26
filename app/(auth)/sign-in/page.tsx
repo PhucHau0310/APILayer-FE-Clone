@@ -1,6 +1,6 @@
 'use client';
 
-import Alert from '@/components/Alert';
+import Alert from '@/components/items/Alert';
 import useAlert from '@/hooks/useAlert';
 import useLoading from '@/hooks/useLoading';
 import Link from 'next/link';

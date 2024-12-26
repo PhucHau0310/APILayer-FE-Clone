@@ -25,7 +25,7 @@ const SnowEffect = () => {
                     height: `${size}vw`,
                     animation: `snowfall ${animationDuration}s linear infinite`,
                     animationDelay: `${animationDelay}s`,
-                    filter: i % 6 === 0 ? 'blur(1px)' : 'none'
+                    filter: i % 6 === 0 ? 'blur(1px)' : 'none',
                 } as React.CSSProperties;
             });
         };

@@ -1,6 +1,6 @@
 'use client';
 
-import Alert from '@/components/Alert';
+import Alert from '@/components/items/Alert';
 import useAlert from '@/hooks/useAlert';
 import { useClickOutside } from '@/hooks/useClickOutSide';
 import useLoading from '@/hooks/useLoading';
@@ -87,6 +87,10 @@ const SignIn: React.FC<SignInProps> = ({ isVisible, onClose }) => {
         }
     };
 
+    const handleClickOAuth = () => {
+        showAlert('This feature is not available yet', 'info');
+    };
+
     return (
         <div
             ref={signInRef}
@@ -111,9 +115,9 @@ const SignIn: React.FC<SignInProps> = ({ isVisible, onClose }) => {
             </div>
 
             <div className="flex flex-col gap-4">
-                <Link
-                    href={'/sign-in'}
-                    className="border w-2/3 mx-auto text-center py-1.5 rounded-md hover:bg-blue-100"
+                <div
+                    onClick={handleClickOAuth}
+                    className="border w-2/3 mx-auto text-center py-1.5 rounded-md hover:bg-blue-100 cursor-pointer"
                 >
                     <FontAwesomeIcon
                         icon={faGoogle}
@@ -122,10 +126,10 @@ const SignIn: React.FC<SignInProps> = ({ isVisible, onClose }) => {
                         className="mr-2"
                     />
                     Sign In With Google
-                </Link>
-                <Link
-                    href={'/sign-in'}
-                    className="border w-2/3 mx-auto text-center py-1.5 rounded-md hover:bg-blue-100"
+                </div>
+                <div
+                    onClick={handleClickOAuth}
+                    className="border w-2/3 mx-auto text-center py-1.5 rounded-md hover:bg-blue-100 cursor-pointer"
                 >
                     <FontAwesomeIcon
                         icon={faGithub}
@@ -134,10 +138,10 @@ const SignIn: React.FC<SignInProps> = ({ isVisible, onClose }) => {
                         className="mr-2"
                     />
                     Sign In With Github
-                </Link>
-                <Link
-                    href={'/sign-in'}
-                    className="border w-2/3 mx-auto text-center py-1.5 rounded-md hover:bg-blue-100"
+                </div>
+                <div
+                    onClick={handleClickOAuth}
+                    className="border w-2/3 mx-auto text-center py-1.5 rounded-md hover:bg-blue-100 cursor-pointer"
                 >
                     <FontAwesomeIcon
                         icon={faFacebook}
@@ -146,7 +150,7 @@ const SignIn: React.FC<SignInProps> = ({ isVisible, onClose }) => {
                         className="mr-2"
                     />
                     Sign In With Fb
-                </Link>
+                </div>
 
                 <p className="text-[#a0aab4] text-center py-3">
                     <span>-------</span> OR <span>-------</span>

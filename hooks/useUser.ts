@@ -4,6 +4,7 @@ interface User {
     username: string;
     email: string;
     role: string;
+    avatar: string;
     hashedPassword: string;
     createdAt: string;
     id: number;

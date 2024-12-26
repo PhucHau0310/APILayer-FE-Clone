@@ -1,6 +1,6 @@
 'use client';
 
-import Alert from '@/components/Alert';
+import Alert from '@/components/items/Alert';
 import useAlert from '@/hooks/useAlert';
 import useLoading from '@/hooks/useLoading';
 import {
@@ -73,6 +73,10 @@ const SignUp = () => {
         }
     };
 
+    const handleClickOAuth = () => {
+        showAlert('This feature is not available yet', 'info');
+    };
+
     return (
         <div className="max-w-md mx-auto pt-8 pb-32">
             <Alert alert={alert} onClose={hideAlert} />
@@ -87,9 +91,9 @@ const SignUp = () => {
             </div>
 
             <div className="flex flex-col gap-4 text-black">
-                <Link
-                    href={'/sign-in'}
-                    className="border w-2/3 mx-auto text-center py-1.5 rounded-md hover:bg-blue-100"
+                <div
+                    onClick={handleClickOAuth}
+                    className="border w-2/3 mx-auto text-center py-1.5 rounded-md hover:bg-blue-100 cursor-pointer"
                 >
                     <FontAwesomeIcon
                         icon={faGoogle}
@@ -98,10 +102,10 @@ const SignUp = () => {
                         className="mr-2"
                     />
                     Sign Up With Google
-                </Link>
-                <Link
-                    href={'/sign-in'}
-                    className="border w-2/3 mx-auto text-center py-1.5 rounded-md hover:bg-blue-100"
+                </div>
+                <div
+                    onClick={handleClickOAuth}
+                    className="border w-2/3 mx-auto text-center py-1.5 rounded-md hover:bg-blue-100 cursor-pointer"
                 >
                     <FontAwesomeIcon
                         icon={faGithub}
@@ -110,10 +114,10 @@ const SignUp = () => {
                         className="mr-2"
                     />
                     Sign Up With Github
-                </Link>
-                <Link
-                    href={'/sign-in'}
-                    className="border w-2/3 mx-auto text-center py-1.5 rounded-md hover:bg-blue-100"
+                </div>
+                <div
+                    onClick={handleClickOAuth}
+                    className="border w-2/3 mx-auto text-center py-1.5 rounded-md hover:bg-blue-100 cursor-pointer"
                 >
                     <FontAwesomeIcon
                         icon={faFacebook}
@@ -122,7 +126,7 @@ const SignUp = () => {
                         className="mr-2"
                     />
                     Sign Up With Fb
-                </Link>
+                </div>
 
                 <p className="text-[#a0aab4] text-center py-3">
                     <span>-------</span> OR <span>-------</span>
