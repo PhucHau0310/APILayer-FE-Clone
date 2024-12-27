@@ -81,7 +81,15 @@ const Support = () => {
 
             <div className="max-w-screen-md mx-auto">
                 <div className="mb-10 flex flex-row items-center transition-all duration-300 gap-3 p-4 rounded-md bg-[#f5f8fd] border border-[#8c98a4] cursor-pointer hover:shadow-md hover:shadow-blue-500">
-                    <FontAwesomeIcon icon={faCircleUser} size="3x" />
+                    {data?.avatar ? (
+                        <img
+                            src={data.avatar}
+                            alt="avatar"
+                            className="w-16 h-16 rounded-full"
+                        />
+                    ) : (
+                        <FontAwesomeIcon icon={faCircleUser} size="3x" />
+                    )}
 
                     <div className="flex flex-col gap-1]">
                         <h2 className="text-[#0052CC] font-medium text-lg">

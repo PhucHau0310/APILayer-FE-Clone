@@ -148,7 +148,7 @@ const Header = () => {
             // }}
             className="z-50 flex items-center bg- justify-between bg-white text-[#27344A] max-w-4xl mx-auto sticky top-5 px-3 py-2 rounded-md shadow-lg"
         >
-            <Link href="/" className="flex items-center gap-2 cursor-pointer">
+            <Link href="/" className="flex items-center gap-1 cursor-pointer">
                 {/* <FontAwesomeIcon
                     icon={faLayerGroup}
                     size="2x"
