@@ -29,6 +29,8 @@ import ImgDecoration from '@/public/img/png/decoration.png';
 import ImgFirework from '@/public/img/png/firework.png';
 import ImgRedEnvelope from '@/public/img/png/red-envelope.png';
 import ImgNewYear from '@/public/img/jpg/newyear.jpg';
+import AnimationLayer from '@/public/img/AnimationLayer.json';
+import Lottie from 'react-lottie-player';
 
 const Menu = [
     {
@@ -147,11 +149,18 @@ const Header = () => {
             className="z-50 flex items-center bg- justify-between bg-white text-[#27344A] max-w-4xl mx-auto sticky top-5 px-3 py-2 rounded-md shadow-lg"
         >
             <Link href="/" className="flex items-center gap-2 cursor-pointer">
-                <FontAwesomeIcon
+                {/* <FontAwesomeIcon
                     icon={faLayerGroup}
                     size="2x"
                     color="#0052cc"
                     className="rotate-[30deg]"
+                /> */}
+                <Lottie
+                    loop
+                    animationData={AnimationLayer}
+                    play
+                    style={{ width: 45, height: 45 }}
+                    // className="rotate-[28deg]"
                 />
                 <h1 className="text-3xl text-[#0052cc] font-semibold">
                     API <span className="text-[#27344a]">Layer</span>
