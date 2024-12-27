@@ -73,7 +73,7 @@ const SignIn: React.FC<SignInProps> = ({ isVisible, onClose }) => {
                 setUsername(null);
 
                 setTimeout(() => {
-                    router.push('/');
+                    router.push('/marketplace');
                     onClose();
                 }, 2000);
             } else {

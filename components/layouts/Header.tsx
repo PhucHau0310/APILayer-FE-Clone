@@ -28,6 +28,7 @@ import ImgConfetti from '@/public/img/png/confetti.png';
 import ImgDecoration from '@/public/img/png/decoration.png';
 import ImgFirework from '@/public/img/png/firework.png';
 import ImgRedEnvelope from '@/public/img/png/red-envelope.png';
+import ImgNewYear from '@/public/img/jpg/newyear.jpg';
 
 const Menu = [
     {
@@ -137,7 +138,14 @@ const Header = () => {
     };
 
     return (
-        <header className="z-50 flex items-center justify-between bg-white text-[#27344A] max-w-4xl mx-auto sticky top-5 px-3 py-2 rounded-md shadow-lg">
+        <header
+            // style={{
+            //     backgroundImage: `url(${ImgNewYear.src})`,
+            //     backgroundSize: 'cover',
+            //     backgroundPosition: 'center',
+            // }}
+            className="z-50 flex items-center bg- justify-between bg-white text-[#27344A] max-w-4xl mx-auto sticky top-5 px-3 py-2 rounded-md shadow-lg"
+        >
             <Link href="/" className="flex items-center gap-2 cursor-pointer">
                 <FontAwesomeIcon
                     icon={faLayerGroup}
