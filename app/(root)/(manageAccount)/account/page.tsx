@@ -4,7 +4,7 @@ import Alert from '@/components/items/Alert';
 import useAlert from '@/hooks/useAlert';
 import useLoading from '@/hooks/useLoading';
 import useUser from '@/hooks/useUser';
-import { faImage } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash, faImage } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 
@@ -14,6 +14,11 @@ const Account = () => {
     const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = React.useState<string>('');
     const [username, setUsername] = React.useState('');
+    const [coolInfo, setCoolInfo] = React.useState('');
+    const [oldPass, setOldPass] = React.useState('');
+    const [newPass, setNewPass] = React.useState('');
+    const [newPassAgain, setNewPassAgain] = React.useState('');
+    const [isSeePassword, setIsSeePassword] = React.useState(false);
     const [loading, startLoading, stopLoading] = useLoading();
     const { alert, showAlert, hideAlert } = useAlert();
     const fileInputRef = React.useRef<HTMLInputElement | null>(null);
@@ -22,7 +27,11 @@ const Account = () => {
         if (data?.username) {
             setUsername(data.username);
         }
-    }, [data?.username]);
+
+        if (data?.coolInfoMySelft) {
+            setCoolInfo(data.coolInfoMySelft);
+        }
+    }, [data?.username || data?.coolInfoMySelft]);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -68,6 +77,86 @@ const Account = () => {
             }
 
             showAlert('Avatar updated successfully!', 'success');
+        } catch (error) {
+            console.log(error);
+            showAlert('An error occurred, please try again later.', 'error');
+        } finally {
+            stopLoading();
+        }
+    };
+
+    const handleUpdateUsername = async () => {
+        startLoading();
+        try {
+            const res = await fetch(
+                'https://localhost:7036/api/User/update-username',
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: data?.username,
+                        newUsername: username,
+                        coolInfoMySelft: coolInfo,
+                    }),
+                }
+            );
+
+            if (!res.ok) {
+                throw new Error('Failed to update username');
+            }
+
+            showAlert('Username updated successfully!', 'success');
+        } catch (error) {
+            console.log(error);
+            showAlert('An error occurred, please try again later.', 'error');
+        } finally {
+            stopLoading();
+        }
+    };
+
+    const handleChangPassword = async () => {
+        if (
+            oldPass.length === 0 ||
+            newPass.length === 0 ||
+            newPassAgain.length === 0
+        ) {
+            showAlert('Please fill all fields', 'error');
+            return;
+        }
+
+        if (newPass !== newPassAgain) {
+            showAlert('New password does not match', 'error');
+            return;
+        }
+
+        startLoading();
+        try {
+            const res = await fetch(
+                'https://localhost:7036/api/User/change-password',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: data?.username,
+                        password: oldPass,
+                        newPassword: newPass,
+                    }),
+                }
+            );
+
+            if (!res.ok) {
+                throw new Error('Failed to change password');
+            }
+
+            showAlert('Changed password successfully!', 'success');
+
+            setOldPass('');
+            setNewPass('');
+            setNewPassAgain('');
         } catch (error) {
             console.log(error);
             showAlert('An error occurred, please try again later.', 'error');
@@ -145,6 +234,8 @@ const Account = () => {
                             onChange={(e) => setUsername(e.target.value)}
                         />
                         <textarea
+                            value={coolInfo}
+                            onChange={(e) => setCoolInfo(e.target.value)}
                             className="w-full h-20 border-2 border-gray-200 rounded-md px-4 py-2 mt-2 focus:border-blue-500 focus:outline-none"
                             placeholder="Some cool info about myself"
                         />
@@ -154,16 +245,25 @@ const Account = () => {
                                 loading ? 'opacity-50 pointer-events-none' : ''
                             }`}
                             disabled={loading}
+                            onClick={handleUpdateUsername}
                         >
-                            Save
+                            {loading ? 'Updating...' : 'Save'}
                         </button>
                     </div>
 
                     <div className="shadow-md p-6 rounded-md bg-white">
-                        <h2 className="font-semibold text-2xl mb-3">
-                            Change Password
-                        </h2>
+                        <div className="flex flex-row items-center gap-4">
+                            <h2 className="font-semibold text-2xl mb-3">
+                                Change Password
+                            </h2>
 
+                            <FontAwesomeIcon
+                                icon={isSeePassword ? faEyeSlash : faEye}
+                                onClick={() => setIsSeePassword(!isSeePassword)}
+                                size="lg"
+                                className="mb-3 hover:scale-105 transition-all duration-300 cursor-pointer"
+                            />
+                        </div>
                         <div className="mb-4">
                             <label
                                 htmlFor="oldPass"
@@ -173,10 +273,12 @@ const Account = () => {
                             </label>
                             <input
                                 id="oldPass"
-                                type="text"
+                                type={isSeePassword ? 'text' : 'password'}
                                 required
                                 className="w-full border-2 border-gray-300 rounded-md px-3 py-2 focus:border-blue-500 focus:outline-none"
                                 placeholder="**********"
+                                value={oldPass}
+                                onChange={(e) => setOldPass(e.target.value)}
                             />
                         </div>
                         <div className="mb-4">
@@ -188,10 +290,12 @@ const Account = () => {
                             </label>
                             <input
                                 id="newPass"
-                                type="text"
+                                type={isSeePassword ? 'text' : 'password'}
                                 required
                                 className="w-full border-2 border-gray-300 rounded-md px-3 py-2 focus:border-blue-500 focus:outline-none"
                                 placeholder="**********"
+                                value={newPass}
+                                onChange={(e) => setNewPass(e.target.value)}
                             />
                         </div>
                         <div>
@@ -203,10 +307,14 @@ const Account = () => {
                             </label>
                             <input
                                 id="oldPass"
-                                type="text"
+                                type={isSeePassword ? 'text' : 'password'}
                                 required
                                 className="w-full border-2 border-gray-300 rounded-md px-3 py-2 focus:border-blue-500 focus:outline-none"
                                 placeholder="**********"
+                                value={newPassAgain}
+                                onChange={(e) =>
+                                    setNewPassAgain(e.target.value)
+                                }
                             />
                         </div>
                         <button
@@ -214,8 +322,9 @@ const Account = () => {
                                 loading ? 'opacity-50 pointer-events-none' : ''
                             }`}
                             disabled={loading}
+                            onClick={handleChangPassword}
                         >
-                            Change Password
+                            {loading ? 'Changing...' : ' Change Password'}
                         </button>
                     </div>
                 </div>

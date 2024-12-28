@@ -10,6 +10,7 @@ interface User {
     id: number;
     isActive: boolean;
     isEmailConfirmed: boolean;
+    coolInfoMySelft: string;
 }
 
 const useUser = () => {

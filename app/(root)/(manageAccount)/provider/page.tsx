@@ -6,10 +6,8 @@ const Provider = () => {
     const [apiName, setApiName] = React.useState<string | null>(null);
     const [shortDesc, setShortDesc] = React.useState<string | null>(null);
     const [categories, setCategories] = React.useState<string | null>(null);
-    const [docsContent, setDocsContent] = React.useState<string | null>(null);
-    const [intergrationGuide, setIntergationGuide] = React.useState<
-        string | null
-    >(null);
+    const [docsUrl, setDocsUrl] = React.useState<string | null>(null);
+    const [logoUrl, setLogoUrl] = React.useState<string | null>(null);
     const [codeExamples, setCodeExamples] = React.useState<string | null>(null);
     return (
         <div className="text-[#1e2022] mt-16 py-8">
@@ -32,7 +30,7 @@ const Provider = () => {
                             onChange={(e) => setApiName(e.target.value)}
                             type="text"
                             placeholder="Enter your API name"
-                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            className="w-full p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                         />
                         <p className="text-[#677788] text-sm font-medium mt-2">
                             Limit: 150 characters
@@ -51,7 +49,7 @@ const Provider = () => {
                             onChange={(e) => setShortDesc(e.target.value)}
                             type="text"
                             placeholder="Provide short description of your API. Max 256 letters"
-                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            className="w-full p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                         />
                         <p className="text-[#677788] text-sm font-medium mt-2">
                             Limit: 400 characters
@@ -65,12 +63,20 @@ const Provider = () => {
                             Categories
                         </label>
                         <select
+                            value={categories ?? ''}
+                            onChange={(e) => setCategories(e.target.value)}
                             name="categories"
                             id="categories"
-                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            className="w-full p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                         >
-                            <option value="">AI/ML</option>
-                            <option value="">Blockchain</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Dev Tools">Dev Tools</option>
+                            <option value="E-commerce">E-commerce</option>
+                            <option value="Geolocation">Geolocation</option>
+                            <option value="Sports">Sports</option>
+                            <option value="Web Tools APIs">
+                                Web Tools APIs
+                            </option>
                         </select>
                     </div>
 
@@ -82,54 +88,45 @@ const Provider = () => {
                             htmlFor="docsContent"
                             className="block text-sm font-medium mb-2"
                         >
-                            Docs Content
+                            Documentation URL
                         </label>
-                        <textarea
+                        <input
+                            type="text"
                             id="docsContent"
-                            value={docsContent ?? ''}
-                            onChange={(e) => setDocsContent(e.target.value)}
-                            placeholder="<h2>How this API Works</h2>
-                            <p>Here is the information about how the API works...</p>
-                            <h3>Sending a request</h3>
-                            <p>To send a request please use examples below</p>"
-                            className="w-full h-32 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            value={docsUrl ?? ''}
+                            onChange={(e) => setDocsUrl(e.target.value)}
+                            placeholder="Provide URL to documentation of your API"
+                            className="w-full p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                         />
-                        <p className="text-[#677788] text-sm font-medium mt-2">
-                            Limit: 5000 characters
-                        </p>
                     </div>
                     <div className="mb-6">
                         <label
-                            htmlFor="IntegrationGuide"
+                            htmlFor="logo"
                             className="block text-sm font-medium mb-2"
                         >
-                            Integration Guide
+                            Logo URL
                         </label>
-                        <textarea
-                            id="IntegrationGuide"
-                            value={intergrationGuide ?? ''}
-                            onChange={(e) =>
-                                setIntergationGuide(e.target.value)
-                            }
-                            placeholder="Provide intergration guide"
-                            className="w-full h-32 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        <input
+                            type="text"
+                            id="logo"
+                            value={logoUrl ?? ''}
+                            onChange={(e) => setLogoUrl(e.target.value)}
+                            placeholder="Url to your API logo"
+                            className="w-full p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                         />
-                        <p className="text-[#677788] text-sm font-medium mt-2">
-                            Limit: 1000 characters
-                        </p>
                     </div>
                     <div className="mb-6">
                         <label
-                            htmlFor="shortDesc"
+                            htmlFor="codeExamples"
                             className="block text-sm font-medium mb-2"
                         >
                             Code Examples
                         </label>
                         <textarea
-                            id="shortDesc"
+                            id="codeExamples"
                             value={codeExamples ?? ''}
                             onChange={(e) => setCodeExamples(e.target.value)}
-                            placeholder="Provide short description of your API. Max 256 letters"
+                            placeholder='{"Id": 1, "Customer": "Leanne Graham", "Quantity": 1, "Price": "$10.00"}'
                             className="w-full h-32 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                         />
                         <p className="text-[#677788] text-sm font-medium mt-2">
