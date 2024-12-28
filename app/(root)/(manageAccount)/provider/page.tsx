@@ -1,5 +1,9 @@
 'use client';
 
+import Alert from '@/components/items/Alert';
+import useAlert from '@/hooks/useAlert';
+import useLoading from '@/hooks/useLoading';
+import useUser from '@/hooks/useUser';
 import React from 'react';
 
 const Provider = () => {
@@ -8,15 +12,121 @@ const Provider = () => {
     const [categories, setCategories] = React.useState<string | null>(null);
     const [docsUrl, setDocsUrl] = React.useState<string | null>(null);
     const [logoUrl, setLogoUrl] = React.useState<string | null>(null);
+    const [pricingUrl, setPricingUrl] = React.useState<string | null>(null);
     const [codeExamples, setCodeExamples] = React.useState<string | null>(null);
+    const [loading, startLoading, stopLoading] = useLoading();
+    const { alert, showAlert, hideAlert } = useAlert();
+    const { data } = useUser();
+
+    const handleBack = () => {
+        setApiName(null);
+        setShortDesc(null);
+        setDocsUrl(null);
+        setLogoUrl(null);
+        setPricingUrl(null);
+        setCodeExamples(null);
+    };
+
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+        await handleUpApi();
+    };
+
+    const isFormValid = () => {
+        if (
+            !apiName ||
+            !shortDesc ||
+            !categories ||
+            !docsUrl ||
+            !logoUrl ||
+            !pricingUrl ||
+            !codeExamples
+        ) {
+            showAlert('Please fill in all required fields', 'error');
+            return false;
+        }
+        return true;
+    };
+
+    const handleUpApi = async () => {
+        if (!isFormValid()) return;
+
+        startLoading();
+        try {
+            const dataApi = {
+                ownerId: data?.id,
+                name: apiName,
+                description: shortDesc,
+                category: categories,
+                pricingUrl: pricingUrl || '', // Provide default empty string
+                basePrice: 0,
+                status: 'Active',
+                overallSubscription: 0,
+            };
+
+            const res = await fetch(`https://localhost:7036/api/Api`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include', // Add this for cookies if needed
+                body: JSON.stringify(dataApi),
+            });
+
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.message || 'Failed to add API');
+            }
+
+            const responseData = await res.json();
+            if (!responseData.data?.id) {
+                throw new Error('Invalid API response');
+            }
+
+            const apiId = responseData.data.id;
+            const dataDocs = {
+                apiId: apiId,
+                documentUrl: docsUrl || '',
+                logoUrl: logoUrl || '',
+                codeExamples: codeExamples || '',
+                status: 'Active',
+            };
+
+            const resSecond = await fetch(
+                `https://localhost:7036/api/Api/documentation`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(dataDocs),
+                }
+            );
+
+            if (!resSecond.ok) {
+                throw new Error('Failed to add documentation');
+            }
+
+            showAlert('API added successfully', 'success');
+            handleBack();
+        } catch (error) {
+            console.error('Error:', error);
+            showAlert('An error occurred while processing', 'error');
+        } finally {
+            stopLoading();
+        }
+    };
+
     return (
         <div className="text-[#1e2022] mt-16 py-8">
+            <Alert alert={alert} onClose={hideAlert} />
             <div className="max-w-[600px] mx-auto">
                 <h1 className="border-b border-b-[#e7eaf3] text-2xl font-semibold pb-4">
                     Add Your API
                 </h1>
 
-                <form className="mt-6">
+                <form className="mt-6" onSubmit={handleSubmit}>
                     <div className="mb-6">
                         <label
                             htmlFor="apiName"
@@ -111,7 +221,23 @@ const Provider = () => {
                             id="logo"
                             value={logoUrl ?? ''}
                             onChange={(e) => setLogoUrl(e.target.value)}
-                            placeholder="Url to your API logo"
+                            placeholder="Provide URL to your API logo"
+                            className="w-full p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        />
+                    </div>
+                    <div className="mb-6">
+                        <label
+                            htmlFor="pricing"
+                            className="block text-sm font-medium mb-2"
+                        >
+                            Pricing URL
+                        </label>
+                        <input
+                            type="text"
+                            id="pricing"
+                            value={pricingUrl ?? ''}
+                            onChange={(e) => setPricingUrl(e.target.value)}
+                            placeholder="URL to your page with Pricing plans"
                             className="w-full p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                         />
                     </div>
@@ -137,20 +263,18 @@ const Provider = () => {
 
                     <div className="flex flex-row items-center justify-between">
                         <button
-                            // onClick={(e) => handlerSignIn(e)}
+                            type="button"
+                            onClick={handleBack}
                             className="border border-blue-700 transition-all duration-300 text-blue-700 py-4 px-10 rounded-md hover:bg-blue-700 hover:text-white"
                         >
-                            {/* {loading ? 'Loading...' : ' Sign In'} */}
                             Back
                         </button>
 
                         <button
                             type="submit"
-                            // onClick={(e) => handlerSignIn(e)}
                             className="bg-blue-700 text-white py-4 px-8 rounded-md hover:shadow-md hover:shadow-blue-500"
                         >
-                            {/* {loading ? 'Loading...' : ' Sign In'} */}
-                            Add your API
+                            {loading ? 'Loading...' : 'Add your API'}
                         </button>
                     </div>
                 </form>

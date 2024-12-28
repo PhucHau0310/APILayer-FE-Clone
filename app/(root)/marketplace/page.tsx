@@ -1,3 +1,6 @@
+'use client';
+
+import useApis from '@/hooks/useApis';
 import {
     faList,
     faPhone,
@@ -6,6 +9,9 @@ import {
     faStar,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Rating } from '@mui/material';
+import Link from 'next/link';
+import React from 'react';
 
 const fakeCategories = [
     {
@@ -50,40 +56,11 @@ const fakeCategories = [
     },
 ];
 
-const fakeItems = [
-    {
-        title: 'IPstack',
-        totalReview: 10,
-        starAvg: 4,
-        sub: 'Locate and Identify Website Visitors by IP Address',
-    },
-    {
-        title: 'Exchange Rates Data API',
-        totalReview: 20,
-        starAvg: 5,
-        sub: 'Real-Time, Intraday & Historical Market Data API.',
-    },
-    {
-        title: 'Currency Data API',
-        totalReview: 30,
-        starAvg: 1,
-        sub: 'Reliable Exchange Rates & Currency Conversion for your Business.',
-    },
-    {
-        title: 'IPapi',
-        totalReview: 10,
-        starAvg: 3,
-        sub: 'Real-time Geolocation & Reverse IP Lookup REST API',
-    },
-    {
-        title: 'Aviationstack',
-        totalReview: 21,
-        starAvg: 2,
-        sub: 'Free, Real-time Flight Status & Global Aviation Data API',
-    },
-];
-
 const Marketplace = () => {
+    const { data, loading, error } = useApis();
+
+    console.log(data);
+
     return (
         <div className="py-20">
             <h1 className="text-[#0052cc] text-center font-medium text-5xl">
@@ -115,10 +92,7 @@ const Marketplace = () => {
                 <div className="flex flex-row items-center text-[#1e2022] gap-10">
                     <div className="flex flex-row items-center gap-2">
                         <span>Sort by</span>
-                        <select
-                            value=""
-                            className="border border-[#e0e5f1] px-2 py-1.5 rounded-md focus:outline-none"
-                        >
+                        <select className="border border-[#e0e5f1] px-2 py-1.5 rounded-md focus:outline-none">
                             <option value="featured">Featured</option>
                             <option value="alphabetical">Alphabetical</option>
                             <option value="latest">Latest</option>
@@ -187,125 +161,29 @@ const Marketplace = () => {
                             Filter by Rating
                         </h2>
                         <div className="mt-4">
-                            <div className="flex flex-row items-center gap-2">
-                                <input
-                                    id="star-5"
-                                    type="checkbox"
-                                    className="w-4 h-4"
-                                />
-                                <label
-                                    htmlFor="star-5"
-                                    className="flex flex-row items-center gap-0.5"
-                                >
-                                    {Array(5)
-                                        .fill(null)
-                                        .map((star, idx) => {
-                                            return (
-                                                <FontAwesomeIcon
-                                                    key={idx}
-                                                    icon={faStar}
-                                                    size="sm"
-                                                    color="#ffc107"
+                            <div className="flex flex-col gap-2">
+                                {Array(5)
+                                    .fill(null)
+                                    .map((_, idx) => (
+                                        <div className="flex flex-row items-center gap-2">
+                                            <input
+                                                id={idx.toString()}
+                                                type="checkbox"
+                                                className="w-4 h-4"
+                                            />
+                                            <label
+                                                htmlFor={idx.toString()}
+                                                className="flex flex-row items-center gap-0.5"
+                                            >
+                                                <Rating
+                                                    name="read-only"
+                                                    value={idx + 1}
+                                                    precision={0.5}
+                                                    readOnly
                                                 />
-                                            );
-                                        })}
-                                </label>
-                            </div>
-                            <div className="flex flex-row items-center gap-2 mt-2">
-                                <input
-                                    id="star-4"
-                                    type="checkbox"
-                                    className="w-4 h-4"
-                                />
-                                <label
-                                    htmlFor="star-4"
-                                    className="flex flex-row items-center gap-0.5"
-                                >
-                                    {Array(4)
-                                        .fill(null)
-                                        .map((star, idx) => {
-                                            return (
-                                                <FontAwesomeIcon
-                                                    key={idx}
-                                                    icon={faStar}
-                                                    size="sm"
-                                                    color="#ffc107"
-                                                />
-                                            );
-                                        })}
-                                </label>
-                            </div>
-                            <div className="flex flex-row items-center gap-2 mt-2">
-                                <input
-                                    id="star-3"
-                                    type="checkbox"
-                                    className="w-4 h-4"
-                                />
-                                <label
-                                    htmlFor="star-3"
-                                    className="flex flex-row items-center gap-0.5"
-                                >
-                                    {Array(3)
-                                        .fill(null)
-                                        .map((star, idx) => {
-                                            return (
-                                                <FontAwesomeIcon
-                                                    key={idx}
-                                                    icon={faStar}
-                                                    size="sm"
-                                                    color="#ffc107"
-                                                />
-                                            );
-                                        })}
-                                </label>
-                            </div>
-                            <div className="flex flex-row items-center gap-2 mt-2">
-                                <input
-                                    id="star-2"
-                                    type="checkbox"
-                                    className="w-4 h-4"
-                                />
-                                <label
-                                    htmlFor="star-2"
-                                    className="flex flex-row items-center gap-0.5"
-                                >
-                                    {Array(2)
-                                        .fill(null)
-                                        .map((star, idx) => {
-                                            return (
-                                                <FontAwesomeIcon
-                                                    key={idx}
-                                                    icon={faStar}
-                                                    size="sm"
-                                                    color="#ffc107"
-                                                />
-                                            );
-                                        })}
-                                </label>
-                            </div>
-                            <div className="flex flex-row items-center gap-2 mt-2">
-                                <input
-                                    id="star-1"
-                                    type="checkbox"
-                                    className="w-4 h-4"
-                                />
-                                <label
-                                    htmlFor="star-1"
-                                    className="flex flex-row items-center gap-0.5"
-                                >
-                                    {Array(1)
-                                        .fill(null)
-                                        .map((star, idx) => {
-                                            return (
-                                                <FontAwesomeIcon
-                                                    key={idx}
-                                                    icon={faStar}
-                                                    size="sm"
-                                                    color="#ffc107"
-                                                />
-                                            );
-                                        })}
-                                </label>
+                                            </label>
+                                        </div>
+                                    ))}
                             </div>
                         </div>
                     </div>
@@ -313,28 +191,31 @@ const Marketplace = () => {
 
                 <div className="w-[72%]">
                     <h2 className="text-[#0052cc] font-semibold text-xl mb-4">
-                        All APIs (219)
+                        All APIs ({data?.length})
                     </h2>
 
                     <div className="grid grid-cols-3 gap-4">
-                        {fakeItems.map((item) => {
+                        {data?.map((item) => {
                             return (
                                 <div
-                                    key={item.title}
+                                    key={item.id}
                                     className="bg-[#f5f8fd] mb-6 p-4 rounded-xl"
                                 >
                                     <div className="flex justify-center mb-5">
-                                        <FontAwesomeIcon
-                                            icon={faPhone}
-                                            size="lg"
-                                            color="blue"
+                                        <img
+                                            src={
+                                                item.documentations[0]
+                                                    ?.logoUrl || ''
+                                            }
+                                            alt="logoUrl"
+                                            className="w-16 h-16 rounded-md"
                                         />
                                     </div>
                                     <h3 className="text-[#1e2022] font-semibold">
-                                        {item.title}
+                                        {item.name}
                                     </h3>
-                                    <p className="mt-2.5">
-                                        {Array(item.starAvg)
+                                    <p className="mt-2.5 flex flex-row items-center">
+                                        {/* {Array(5)
                                             .fill(null)
                                             .map((star, idx) => {
                                                 return (
@@ -346,18 +227,27 @@ const Marketplace = () => {
                                                         className="mr-1"
                                                     />
                                                 );
-                                            })}
+                                            })} */}
+                                        <Rating
+                                            name="read-only"
+                                            value={item.reviews.length ?? 0}
+                                            precision={0.5}
+                                            readOnly
+                                        />
                                         <span className="text-[#677788] text-sm ml-1.5">
-                                            ({item.totalReview})
+                                            ({item.reviews.length ?? 0})
                                         </span>
                                     </p>
                                     <p className="text-[#1e2022] text-base mt-3 h-24">
-                                        {item.sub}
+                                        {item.description}
                                     </p>
 
-                                    <button className="text-white bg-[#2390e5] mt-16 block mx-auto px-5 py-1.5 rounded-md hover:opacity-90">
+                                    <Link
+                                        href={`/marketplace/${item.name}`}
+                                        className="text-white bg-[#2390e5] mt-20 block mx-auto w-28 text-center px-5 py-1.5 rounded-md hover:opacity-90"
+                                    >
                                         View API
-                                    </button>
+                                    </Link>
                                 </div>
                             );
                         })}
