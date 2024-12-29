@@ -111,6 +111,7 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
 
     return (
         <div className="mb-20">
+            {/* Links */}
             <div className="bg-[#f5f8fd] p-5 mt-6">
                 <div className="max-w-6xl mx-auto">
                     <Link
@@ -130,6 +131,7 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
                 </div>
             </div>
 
+            {/* Information */}
             <div className="max-w-6xl mx-auto flex flex-row items-start justify-between gap-8">
                 <div className="w-1/2 py-8">
                     <div className="flex flex-row items-start gap-8">
@@ -181,6 +183,7 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
                 </div>
             </div>
 
+            {/* Tabs */}
             <div className="max-w-6xl mx-auto mt-4 text-[#677788] flex flex-row items-center gap-12 border-b border-b-[#677788] pb-6 px-5">
                 <button
                     onClick={() => setSubTab('API Info')}
@@ -228,6 +231,7 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
                 {subTab === 'API Info' ? (
                     <p className="text-base">Not yet provided API Info</p>
                 ) : (
+                    // Reviews
                     <>
                         <div className="flex flex-row items-start justify-between gap-8">
                             <div className="w-1/3 py-10 bg-blue-700 rounded-md flex flex-col justify-center items-center">
@@ -243,6 +247,7 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
                                 <p className="mt-2 text-white">API rating</p>
                             </div>
 
+                            {/* Write Review */}
                             <div className="w-2/3">
                                 <input
                                     type="text"
@@ -289,6 +294,7 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
                             </div>
                         </div>
 
+                        {/* Show Reviews */}
                         <div className="flex flex-col gap-8 mt-16 shadow-md p-4 h-[600px] overflow-y-scroll">
                             {Array(8)
                                 .fill(null)
@@ -330,34 +336,40 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
                 )}
             </div>
 
+            {/* Related Products */}
             <div className="max-w-6xl mx-auto mt-20">
                 <h2 className="font-medium text-4xl text-blue-700">
                     Related Products
                 </h2>
 
                 <div className="grid grid-cols-3 gap-6 mt-6">
-                    {Array(5)
-                        .fill(0)
-                        .map((item, idx) => (
-                            <div
+                    {data
+                        ?.filter(
+                            (item) =>
+                                item.category === api?.category &&
+                                item.id !== api?.id
+                        ) // Exclude the current API
+                        ?.map((item, idx) => (
+                            <Link
+                                href={`/marketplace/${item.name}`}
                                 key={idx}
-                                className="flex flex-row items-center gap-6"
+                                className="flex flex-row items-center gap-6 cursor-pointer"
                             >
                                 <img
-                                    src={api?.documentations[0].logoUrl}
+                                    src={item?.documentations[0].logoUrl}
                                     alt="logoUrl"
                                     className="w-20 h-20"
                                 />
 
                                 <div>
                                     <h2 className="text-black font-semibold text-lg">
-                                        {api?.name}
+                                        {item?.name}
                                     </h2>
                                     <h3 className="text-[#677788] text-sm">
-                                        {api?.category}
+                                        {item?.category}
                                     </h3>
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                 </div>
             </div>
