@@ -12,7 +12,7 @@ import Link from 'next/link';
 
 
 
-const Account = () => {
+const PurchaseHistory = () => {
     return (
         <div className="mt-10 mb-20">
             <div className="text-[#677788] flex flex-row items-center gap-2 mt-10 max-w-screen-lg mx-auto">
@@ -110,4 +110,4 @@ const Account = () => {
     );
 };
 
-export default Account;
+export default PurchaseHistory;
