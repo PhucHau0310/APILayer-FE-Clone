@@ -3,7 +3,9 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
-import LoadingBar from '@/components/items/LoadingBar';
+// import LoadingBar from '@/components/items/LoadingBar';
+import { Suspense } from 'react';
+
 config.autoAddCss = false;
 const geistSans = Geist({
     variable: '--font-geist-sans',
@@ -27,11 +29,11 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-            >
-                <LoadingBar />
-                {children}
+            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+                {/*<LoadingBar />*/}
+                <Suspense>
+                    {children}
+                </Suspense>
             </body>
         </html>
     );
