@@ -11,6 +11,19 @@ interface User {
     isActive: boolean;
     isEmailConfirmed: boolean;
     coolInfoMySelft: string;
+    userSubscriptions: {
+        $values: Subscription[];
+    };
+}
+
+interface Subscription {
+    userId: number;
+    apiId: number;
+    endDate: string;
+    id: number;
+    paymentStatus: string;
+    startDate: string;
+    subscriptionType: string;
 }
 
 const useUser = () => {

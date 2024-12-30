@@ -1,7 +1,9 @@
 'use client';
 
 import useApis from '@/hooks/useApis';
+import useUser from '@/hooks/useUser';
 import {
+    faCheck,
     faList,
     faPhone,
     faSearch,
@@ -15,6 +17,7 @@ import React from 'react';
 
 const Marketplace = () => {
     const { data, loading, error } = useApis();
+    const { data: userData } = useUser();
     const [selectedCategories, setSelectedCategories] = React.useState<
         string[]
     >([]);
@@ -34,7 +37,8 @@ const Marketplace = () => {
         'Web Tools APIs',
     ];
 
-    console.log(data);
+    // console.log(data);
+    // console.log(userData?.userSubscriptions.$values);
 
     const countCategories = (category: string) => {
         return data?.filter((api) => api.category === category).length || 0;
@@ -331,8 +335,28 @@ const Marketplace = () => {
                                     return (
                                         <div
                                             key={item.id}
-                                            className="bg-[#f5f8fd] mb-6 p-4 rounded-xl"
+                                            className="bg-[#f5f8fd] mb-6 p-4 rounded-xl relative"
                                         >
+                                            {userData?.userSubscriptions.$values.map(
+                                                (subsItem) =>
+                                                    subsItem.apiId ===
+                                                        item.id && (
+                                                        <div
+                                                            key={subsItem.id}
+                                                            className="absolute top-1 left-1 bg-green-100 p-1 rounded-md"
+                                                        >
+                                                            <FontAwesomeIcon
+                                                                icon={faCheck}
+                                                                size="1x"
+                                                                color="green"
+                                                            />
+                                                            <span className="text-green-700 ml-1 text-sm">
+                                                                Subcribed
+                                                            </span>
+                                                        </div>
+                                                    )
+                                            )}
+
                                             <div className="flex justify-center mb-5">
                                                 <img
                                                     src={
@@ -390,9 +414,29 @@ const Marketplace = () => {
                                         className="w-14 h-14 rounded-full"
                                     />
 
-                                    <h3 className="text-[#1e2022] font-semibold text-sm w-[33%]">
-                                        {item.name}
-                                    </h3>
+                                    <div>
+                                        <h3 className="text-[#1e2022] font-semibold text-sm w-[33%]">
+                                            {item.name}
+                                        </h3>
+                                        {userData?.userSubscriptions.$values.map(
+                                            (subsItem) =>
+                                                subsItem.apiId === item.id && (
+                                                    <div
+                                                        key={subsItem.id}
+                                                        className=" bg-green-100 px-1 rounded-md"
+                                                    >
+                                                        <FontAwesomeIcon
+                                                            icon={faCheck}
+                                                            size="1x"
+                                                            color="green"
+                                                        />
+                                                        <span className="text-green-700 ml-1 text-sm">
+                                                            Subcribed
+                                                        </span>
+                                                    </div>
+                                                )
+                                        )}
+                                    </div>
 
                                     <p className="flex flex-row items-center">
                                         <Rating
