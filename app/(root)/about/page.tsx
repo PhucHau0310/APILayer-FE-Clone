@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import LightImg from '@/public/img/light.jpg';
+import LightImg from '@/public/img/jpg/light.jpg';
 import Link from 'next/link';
 
 const About = () => {

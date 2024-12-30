@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import StudyImg from '@/public/img/study.jpg';
+import StudyImg from '@/public/img/jpg/study.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faBook,
