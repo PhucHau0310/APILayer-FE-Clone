@@ -1,6 +1,10 @@
 'use client';
 
+import Alert from '@/components/items/Alert';
+import useAlert from '@/hooks/useAlert';
 import useApis from '@/hooks/useApis';
+import useLoading from '@/hooks/useLoading';
+import useUser from '@/hooks/useUser';
 import {
     faGrinBeam,
     faMeh,
@@ -13,6 +17,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Rating } from '@mui/material';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 interface APIDoc {
@@ -44,10 +49,41 @@ interface Params {
 const ApiDetail = ({ params }: { params: Promise<Params> }) => {
     const resolvedParams = React.use(params);
     const { slug } = resolvedParams;
-    const { data, loading, error } = useApis();
+    const { data } = useApis();
+    const { data: userData } = useUser();
     const [api, setApi] = React.useState<API | null>(null);
     const [subTab, setSubTab] = React.useState('API Info');
     const [rating, setRating] = React.useState<number | null>(2);
+    const [loading, startLoading, hideLoading] = useLoading();
+    const { alert, showAlert, hideAlert } = useAlert();
+    const router = useRouter();
+
+    const [randomApiKey, setRandomApiKey] = React.useState('');
+    const [copyText, setCopyText] = React.useState('Copy API Key');
+
+    const generateRandomString = (length: number) => {
+        const chars =
+            'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+        for (let i = 0; i < length; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+    };
+
+    React.useEffect(() => {
+        setRandomApiKey(generateRandomString(32));
+    }, [slug]);
+
+    const handleCopy = async () => {
+        try {
+            await navigator.clipboard.writeText(randomApiKey);
+            setCopyText('Copied!');
+            setTimeout(() => setCopyText('Copy to Clipboard!'), 2000); // Đặt lại chữ sau 2 giây
+        } catch (error) {
+            console.error('Failed to copy API key:', error);
+        }
+    };
 
     const getRatingInfo = (
         rating: number | null
@@ -109,8 +145,59 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
         }
     }, [data, slug]);
 
+    const handleSubscription = async () => {
+        startLoading();
+
+        try {
+            if (!userData?.id || !api?.id) {
+                showAlert('User or API information is missing!', 'error');
+                hideLoading();
+                return;
+            }
+
+            const subsInfo = {
+                id: 0,
+                userId: userData?.id,
+                apiId: api?.id,
+                subscriptionType: api?.basePrice === 0 ? 'Free' : 'Premium',
+                startDate: new Date().toISOString(),
+                endDate: new Date(
+                    new Date().setFullYear(new Date().getFullYear() + 1)
+                ).toISOString(),
+            };
+
+            const res = await fetch(
+                `https://localhost:7036/api/Subscription/user`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(subsInfo),
+                }
+            );
+
+            if (!res.ok) {
+                showAlert('Failed to subscription!', 'error');
+                return;
+            }
+
+            showAlert('Subscription successfully!', 'success');
+            setTimeout(() => {
+                router.push(`/marketplace/order-complete/${slug}`);
+            }, 2000);
+        } catch (error) {
+            console.log(error);
+            showAlert('An occured while proccessing', 'error');
+        } finally {
+            hideLoading();
+        }
+    };
+
     return (
         <div className="mb-20">
+            <Alert alert={alert} onClose={hideAlert} />
             {/* Links */}
             <div className="bg-[#f5f8fd] p-5 mt-6">
                 <div className="max-w-6xl mx-auto">
@@ -151,36 +238,93 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
                         </div>
                     </div>
 
-                    <button className="flex flex-row items-center gap-4 font-semibold mt-10 bg-blue-700 py-4 px-16 rounded-md text-base hover:shadow-md transition-all hover:shadow-blue-500">
-                        Subscribe
-                        <FontAwesomeIcon
-                            icon={faUpRightFromSquare}
-                            size="1x"
-                            color="white"
-                        />
-                    </button>
-                </div>
-
-                <div className="bg-black w-1/2">
-                    <div className="p-4 font-mono text-sm h-[230px] overflow-y-scroll">
-                        <pre className="whitespace-pre-wrap">
-                            <code>{api?.documentations[0].codeExamples}</code>
-                        </pre>
-                    </div>
-
-                    <div className="px-4 py-2 bg-[#252525] text-gray-400 text-sm">
-                        Response example. If you want to see more{' '}
-                        <Link
-                            href={api?.documentations[0].documentUrl ?? ''}
-                            className="text-blue-400 hover:text-blue-300 hover:underline"
-                            target="_blank"
-                            rel="noopener noreferrer"
+                    {userData?.userSubscriptions?.$values.some(
+                        (subsItem) => subsItem.apiId === api?.id
+                    ) ? (
+                        <button
+                            // onClick={() =>
+                            //     router.push(`/subscriptions/${api?.id}`)
+                            // }
+                            className="flex flex-row items-center gap-4 font-semibold mt-10 bg-gray-500 py-4 px-10 rounded-md text-base hover:shadow-md transition-all"
                         >
-                            check the documentation
-                        </Link>
-                        .
-                    </div>
+                            Manage Subscription
+                        </button>
+                    ) : (
+                        <button
+                            onClick={handleSubscription}
+                            className="flex flex-row items-center gap-4 font-semibold mt-10 bg-blue-700 py-4 px-16 rounded-md text-base hover:shadow-md transition-all hover:shadow-blue-500"
+                        >
+                            {loading ? (
+                                'Loading...'
+                            ) : (
+                                <>
+                                    Subscribe
+                                    <FontAwesomeIcon
+                                        icon={faUpRightFromSquare}
+                                        size="1x"
+                                        color="white"
+                                    />
+                                </>
+                            )}
+                        </button>
+                    )}
                 </div>
+
+                {userData?.userSubscriptions?.$values.some(
+                    (subsItem) => subsItem.apiId === api?.id
+                ) ? (
+                    <div className="shadow-md border border-gray-300 w-1/2 rounded-md mt-6">
+                        <p className="border-b border-b-gray-300 p-4 text-[#677788]">
+                            Your plan:{' '}
+                            <span className="font-semibold text-blue-600">
+                                Free plan
+                            </span>
+                        </p>
+
+                        <div className="border-b border-b-gray-300 p-4 flex flex-row items-center justify-between">
+                            <div>
+                                <p className="text-black font-semibold text-lg">
+                                    API Key:{' '}
+                                </p>
+                                <p className="text-[#677788] text-lg">
+                                    {generateRandomString(32)}
+                                </p>
+                            </div>
+
+                            <button
+                                onClick={handleCopy}
+                                className="bg-gray-500 text-white px-2 py-1 rounded-md text-sm"
+                            >
+                                {copyText}
+                            </button>
+                        </div>
+
+                        <div className="h-12"></div>
+                    </div>
+                ) : (
+                    <div className="bg-black w-1/2">
+                        <div className="p-4 font-mono text-sm h-[230px] overflow-y-scroll">
+                            <pre className="whitespace-pre-wrap">
+                                <code>
+                                    {api?.documentations[0].codeExamples}
+                                </code>
+                            </pre>
+                        </div>
+
+                        <div className="px-4 py-2 bg-[#252525] text-gray-400 text-sm">
+                            Response example. If you want to see more{' '}
+                            <Link
+                                href={api?.documentations[0].documentUrl ?? ''}
+                                className="text-blue-400 hover:text-blue-300 hover:underline"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                check the documentation
+                            </Link>
+                            .
+                        </div>
+                    </div>
+                )}
             </div>
 
             {/* Tabs */}
