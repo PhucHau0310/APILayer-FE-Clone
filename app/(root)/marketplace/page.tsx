@@ -68,12 +68,12 @@ const Marketplace = () => {
                     categories.includes(api.category);
 
                 const averageRating =
-                    api.reviews.length > 0
+                    api.reviews.$values.length > 0
                         ? Math.round(
-                              api.reviews.reduce(
+                              api.reviews.$values.reduce(
                                   (sum, review) => sum + review.rating,
                                   0
-                              ) / api.reviews.length
+                              ) / api.reviews.$values.length
                           )
                         : 0;
 
@@ -374,13 +374,31 @@ const Marketplace = () => {
                                                 <Rating
                                                     name="read-only"
                                                     value={
-                                                        item.reviews.length ?? 0
+                                                        item?.reviews.$values &&
+                                                        item?.reviews.$values
+                                                            .length > 0
+                                                            ? item.reviews.$values.reduce(
+                                                                  (
+                                                                      sum,
+                                                                      review
+                                                                  ) =>
+                                                                      sum +
+                                                                      review.rating,
+                                                                  0
+                                                              ) /
+                                                              item.reviews
+                                                                  .$values
+                                                                  .length
+                                                            : 0
                                                     }
                                                     precision={0.5}
                                                     readOnly
                                                 />
                                                 <span className="text-[#677788] text-sm ml-1.5">
-                                                    ({item.reviews.length ?? 0})
+                                                    (
+                                                    {item.reviews.$values
+                                                        .length ?? 0}
+                                                    )
                                                 </span>
                                             </p>
                                             <p className="text-[#1e2022] text-base mt-3 h-24">
@@ -441,12 +459,24 @@ const Marketplace = () => {
                                     <p className="flex flex-row items-center">
                                         <Rating
                                             name="read-only"
-                                            value={item.reviews.length ?? 0}
+                                            value={
+                                                item?.reviews.$values &&
+                                                item?.reviews.$values.length > 0
+                                                    ? item.reviews.$values.reduce(
+                                                          (sum, review) =>
+                                                              sum +
+                                                              review.rating,
+                                                          0
+                                                      ) /
+                                                      item.reviews.$values
+                                                          .length
+                                                    : 0
+                                            }
                                             precision={0.5}
                                             readOnly
                                         />
                                         <span className="text-[#677788] text-sm ml-1">
-                                            ({item.reviews.length ?? 0})
+                                            ({item.reviews.$values.length ?? 0})
                                         </span>
                                     </p>
 

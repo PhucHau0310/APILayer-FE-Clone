@@ -20,7 +20,9 @@ interface API {
     status: string;
     overallSubscription: number;
     documentations: APIDoc[];
-    reviews: Review[];
+    reviews: {
+        $values: Review[];
+    };
 }
 
 interface Review {

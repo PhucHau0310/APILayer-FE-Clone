@@ -13,6 +13,7 @@ import {
     faSmile,
     faStarHalfAlt,
     faUpRightFromSquare,
+    faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Rating } from '@mui/material';
@@ -28,6 +29,14 @@ interface APIDoc {
     codeExamples: string;
     status: string;
 }
+interface Review {
+    reviewId: number;
+    userId: number;
+    apiId: number;
+    rating: number;
+    comment: string;
+    reviewDate: Date;
+}
 
 interface API {
     id: number;
@@ -40,6 +49,9 @@ interface API {
     status: string;
     overallSubscription: number;
     documentations: APIDoc[];
+    reviews: {
+        $values: Review[];
+    };
 }
 
 interface Params {
@@ -57,6 +69,7 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
     const [loading, startLoading, hideLoading] = useLoading();
     const { alert, showAlert, hideAlert } = useAlert();
     const router = useRouter();
+    const [textReview, setTextReview] = React.useState('');
 
     const [randomApiKey, setRandomApiKey] = React.useState('');
     const [copyText, setCopyText] = React.useState('Copy API Key');
@@ -194,6 +207,52 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
             hideLoading();
         }
     };
+
+    const handleWriteReview = async () => {
+        startLoading();
+        try {
+            if (!userData || !rating || !textReview) {
+                showAlert('Fill in all', 'error');
+                return;
+            }
+
+            const dataReq = {
+                userId: userData?.id,
+                apiId: api?.id,
+                rating: rating,
+                comment: textReview,
+            };
+
+            const res = await fetch(`https://localhost:7036/api/Review`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include', // Add this for cookies if needed
+                body: JSON.stringify(dataReq),
+            });
+
+            if (!res.ok) {
+                showAlert('Failled to add review', 'error');
+            }
+
+            showAlert('Add review successfully', 'success');
+            setTextReview('');
+        } catch (error) {
+            console.log(error);
+            showAlert('An occured while proccessing', 'error');
+        } finally {
+            hideLoading();
+        }
+    };
+
+    let ratingAvg =
+        api?.reviews.$values && api?.reviews.$values.length > 0
+            ? api.reviews.$values.reduce(
+                  (sum, review) => sum + review.rating,
+                  0
+              ) / api.reviews.$values.length
+            : 0;
 
     return (
         <div className="mb-20">
@@ -380,11 +439,11 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
                         <div className="flex flex-row items-start justify-between gap-8">
                             <div className="w-1/3 py-10 bg-blue-700 rounded-md flex flex-col justify-center items-center">
                                 <p className="text-white font-semibold text-5xl mb-2">
-                                    4.5
+                                    {ratingAvg.toFixed(1)}
                                 </p>
                                 <Rating
                                     name="read-only"
-                                    value={4.5}
+                                    value={ratingAvg}
                                     precision={0.5}
                                     readOnly
                                 />
@@ -394,6 +453,10 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
                             {/* Write Review */}
                             <div className="w-2/3">
                                 <input
+                                    value={textReview}
+                                    onChange={(e) =>
+                                        setTextReview(e.target.value)
+                                    }
                                     type="text"
                                     name="review"
                                     id="review"
@@ -402,8 +465,13 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
                                 />
 
                                 <div className="flex flex-row items-center gap-14 mt-8">
-                                    <button className="bg-red-400 px-6 py-2 text-white rounded-full transition-all hover:shadow-md hover:shadow-red-500">
-                                        Write review
+                                    <button
+                                        onClick={handleWriteReview}
+                                        className="bg-red-400 px-6 py-2 text-white rounded-full transition-all hover:shadow-md hover:shadow-red-500"
+                                    >
+                                        {loading
+                                            ? 'Loading...'
+                                            : ' Write review'}
                                     </button>
 
                                     <div className="flex flex-row items-center gap-4">
@@ -439,24 +507,39 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
                         </div>
 
                         {/* Show Reviews */}
-                        <div className="flex flex-col gap-8 mt-16 shadow-md p-4 h-[600px] overflow-y-scroll">
-                            {Array(8)
-                                .fill(null)
-                                .map((item, idx) => (
+                        <div className="flex flex-col gap-8 mt-16 shadow-md p-4 max-h-[600px] overflow-y-scroll">
+                            {api?.reviews.$values.map((item, idx) => {
+                                return (
                                     <div
                                         key={idx}
                                         className="flex flex-row items-center justify-between gap-8"
                                     >
                                         <div className="w-1/3 flex flex-row items-center gap-3">
-                                            <img
+                                            {/* <img
                                                 src="/"
                                                 alt="avatar"
                                                 className="w-12 h-12 rounded-full"
+                                            /> */}
+                                            <FontAwesomeIcon
+                                                icon={faUser}
+                                                size="2x"
+                                                className="rounded-full border border-gray-300 p-2.5"
                                             />
                                             <div>
-                                                <p>2 years ago</p>
+                                                <p>
+                                                    {new Date(
+                                                        item.reviewDate
+                                                    ).toLocaleDateString(
+                                                        'en-US',
+                                                        {
+                                                            year: 'numeric',
+                                                            month: 'long',
+                                                            day: 'numeric',
+                                                        }
+                                                    )}
+                                                </p>
                                                 <p className="font-semibold text-black">
-                                                    Nguyen Hau
+                                                    UserID: {item.userId}
                                                 </p>
                                             </div>
                                         </div>
@@ -464,17 +547,15 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
                                         <div className="w-2/3">
                                             <Rating
                                                 name="read-only"
-                                                value={4.5}
+                                                value={item.rating}
                                                 precision={0.5}
                                                 readOnly
                                             />
-                                            <p>
-                                                Amazing API, accurate and fast
-                                                results! I love it
-                                            </p>
+                                            <p>{item.comment}</p>
                                         </div>
                                     </div>
-                                ))}
+                                );
+                            })}
                         </div>
                     </>
                 )}
