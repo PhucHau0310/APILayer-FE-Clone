@@ -251,7 +251,7 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
                 userId: userData?.id,
                 apiId: api?.id,
                 amount: api.basePrice,
-                orderDescription: `Buy api: ${api.name}`,
+                orderDescription: '',
             };
 
             const res = await fetch(
@@ -276,6 +276,7 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
             if (responseData.paymentUrl) {
                 // Redirect user to the payment gateway (VNPay/MoMo) to complete the payment
                 window.location.href = responseData.paymentUrl;
+                handleSubscription();
             } else {
                 showAlert('Failed to get payment URL.', 'error');
             }
