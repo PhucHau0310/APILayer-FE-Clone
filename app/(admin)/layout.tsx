@@ -1,19 +1,17 @@
-import Header from '../../components/layouts/Header';
-import Footer from '../../components/layouts/Footer';
 import React from 'react';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-    title: 'Dashboard',
-    description: 'Marketplace for APIs',
-};
+import LeftSideBar from '@/components/items/admin/LeftSideBar';
+import TopBar from '@/components/items/admin/TopBar';
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     return (
-        <div className="bg-white">
-            {/* <Header /> */}
-            {children}
-            {/* <Footer /> */}
+        <div className="bg-[#111C44]">
+            <div className="flex flex-row">
+                <LeftSideBar />
+                <div className="ml-[290px]">
+                    <TopBar />
+                    {children}
+                </div>
+            </div>
         </div>
     );
 };
