@@ -20,6 +20,17 @@ import { Rating } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import {
+    Button,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    Slide,
+} from '@mui/material';
+import { TransitionProps } from '@mui/material/transitions';
+import IcVNPay from '@/public/img/vnpay.svg';
+import Image from 'next/image';
 
 interface APIDoc {
     id: number;
@@ -58,6 +69,15 @@ interface Params {
     slug: string;
 }
 
+const Transition = React.forwardRef(function Transition(
+    props: TransitionProps & {
+        children: React.ReactElement;
+    },
+    ref: React.Ref<unknown>
+) {
+    return <Slide direction="down" ref={ref} {...props} />;
+});
+
 const ApiDetail = ({ params }: { params: Promise<Params> }) => {
     const resolvedParams = React.use(params);
     const { slug } = resolvedParams;
@@ -70,6 +90,7 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
     const { alert, showAlert, hideAlert } = useAlert();
     const router = useRouter();
     const [textReview, setTextReview] = React.useState('');
+    const [open, setOpen] = React.useState(false);
 
     const [randomApiKey, setRandomApiKey] = React.useState('');
     const [copyText, setCopyText] = React.useState('Copy API Key');
@@ -208,6 +229,65 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
         }
     };
 
+    const handleSubscrtiptionPremium = async () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleBuy = async () => {
+        startLoading();
+
+        try {
+            if (!userData?.id || !api?.id) {
+                showAlert('User or API information is missing!', 'error');
+                hideLoading();
+                return;
+            }
+
+            const paymentData = {
+                userId: userData?.id,
+                apiId: api?.id,
+                amount: api.basePrice,
+                orderDescription: `Buy api: ${api.name}`,
+            };
+
+            const res = await fetch(
+                `https://localhost:7036/api/Payment/create-vnpay-payment`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(paymentData),
+                }
+            );
+
+            if (!res.ok) {
+                showAlert('Failed to payment!', 'error');
+                hideLoading();
+                return;
+            }
+
+            const responseData = await res.json();
+            if (responseData.paymentUrl) {
+                // Redirect user to the payment gateway (VNPay/MoMo) to complete the payment
+                window.location.href = responseData.paymentUrl;
+            } else {
+                showAlert('Failed to get payment URL.', 'error');
+            }
+            // showAlert('Payment successfully!', 'success');
+        } catch (error) {
+            console.log(error);
+            showAlert('An occured while payment proccessing', 'error');
+        } finally {
+            hideLoading();
+        }
+    };
+
     const handleWriteReview = async () => {
         startLoading();
         try {
@@ -257,6 +337,42 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
     return (
         <div className="mb-20">
             <Alert alert={alert} onClose={hideAlert} />
+
+            <Dialog
+                open={open}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={handleClose}
+                aria-describedby="alert-dialog-slide-description"
+            >
+                <DialogTitle className="flex flex-col items-center">
+                    <span className="font-semibold text-2xl">
+                        {'Payment by VNPAY'}
+                    </span>
+                    <Image
+                        src={IcVNPay}
+                        alt="vnpay-icon"
+                        className="w-16 h-16"
+                    />
+                </DialogTitle>
+                <DialogContent>
+                    <div
+                        id="alert-dialog-slide-description"
+                        className="font-medium text-lg"
+                    >
+                        Are you sure you want to buy this API?
+                    </div>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>
+                        <span className="text-red-600">Cancel</span>
+                    </Button>
+                    <Button onClick={handleBuy}>
+                        <span className="text-blue-500">Buy</span>
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
             {/* Links */}
             <div className="bg-[#f5f8fd] p-5 mt-6">
                 <div className="max-w-6xl mx-auto">
@@ -291,8 +407,20 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
                             <h1 className="font-medium text-3xl text-blue-600 mb-4">
                                 {api?.name}
                             </h1>
+
                             <h2 className="text-[#677788]  text-lg">
                                 {api?.description}
+                            </h2>
+
+                            <h2 className="text-[#677788] mt-3 text-lg">
+                                Price:{' '}
+                                <span className="text-black font-semibold">
+                                    {api?.basePrice !== 0 &&
+                                        api?.basePrice.toLocaleString(
+                                            'vi-VN'
+                                        )}{' '}
+                                    VND
+                                </span>
                             </h2>
                         </div>
                     </div>
@@ -307,6 +435,24 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
                             className="flex flex-row items-center gap-4 font-semibold mt-10 bg-gray-500 py-4 px-10 rounded-md text-base hover:shadow-md transition-all"
                         >
                             Manage Subscription
+                        </button>
+                    ) : api?.basePrice !== 0 ? (
+                        <button
+                            onClick={handleSubscrtiptionPremium}
+                            className="flex flex-row items-center gap-4 font-semibold mt-10 bg-blue-700 py-4 px-16 rounded-md text-base hover:shadow-md transition-all hover:shadow-blue-500"
+                        >
+                            {loading ? (
+                                'Loading...'
+                            ) : (
+                                <>
+                                    Subscribe
+                                    <FontAwesomeIcon
+                                        icon={faUpRightFromSquare}
+                                        size="1x"
+                                        color="white"
+                                    />
+                                </>
+                            )}
                         </button>
                     ) : (
                         <button
