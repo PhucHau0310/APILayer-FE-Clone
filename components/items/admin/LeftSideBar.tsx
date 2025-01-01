@@ -52,7 +52,7 @@ const LeftSideBar = () => {
     const pathname = usePathname();
 
     return (
-        <div className="bg-[#1B254B] w-[290px] fixed h-full">
+        <div className="bg-[#111C44] w-[290px] fixed h-full shadow-lg">
             <Link
                 href="/"
                 className="flex justify-center items-center gap-1 cursor-pointer border-b border-b-gray-600 py-5"
