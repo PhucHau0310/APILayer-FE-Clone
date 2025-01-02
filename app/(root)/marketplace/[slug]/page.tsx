@@ -201,7 +201,7 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
             };
 
             const res = await fetch(
-                `https://localhost:7036/api/Subscription/user`,
+                `${process.env.NEXT_PUBLIC_API_BE}/api/Subscription/user`,
                 {
                     method: 'POST',
                     headers: {
@@ -255,7 +255,7 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
             };
 
             const res = await fetch(
-                `https://localhost:7036/api/Payment/create-vnpay-payment`,
+                `${process.env.NEXT_PUBLIC_API_BE}/api/Payment/create-vnpay-payment`,
                 {
                     method: 'POST',
                     headers: {
@@ -304,14 +304,17 @@ const ApiDetail = ({ params }: { params: Promise<Params> }) => {
                 comment: textReview,
             };
 
-            const res = await fetch(`https://localhost:7036/api/Review`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                credentials: 'include', // Add this for cookies if needed
-                body: JSON.stringify(dataReq),
-            });
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_API_BE}/api/Review`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include', // Add this for cookies if needed
+                    body: JSON.stringify(dataReq),
+                }
+            );
 
             if (!res.ok) {
                 showAlert('Failled to add review', 'error');

@@ -38,7 +38,7 @@ const Support = () => {
             };
 
             const res = await fetch(
-                `https://localhost:7036/api/FAQ/create-faq`,
+                `${process.env.NEXT_PUBLIC_API_BE}/api/FAQ/create-faq`,
                 {
                     method: 'POST',
                     headers: {

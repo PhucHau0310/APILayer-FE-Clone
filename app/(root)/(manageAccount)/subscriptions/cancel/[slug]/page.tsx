@@ -24,7 +24,7 @@ const CancelPage = ({ params }: { params: Promise<{ slug: string }> }) => {
                 return;
             }
             const res = await fetch(
-                `https://localhost:7036/api/Subscription/user/${slug}`,
+                `${process.env.NEXT_PUBLIC_API_BE}/api/Subscription/user/${slug}`,
                 {
                     method: 'DELETE',
                 }

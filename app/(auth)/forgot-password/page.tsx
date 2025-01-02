@@ -34,7 +34,7 @@ const ForgotPassword = () => {
         startLoading();
         try {
             const url = new URL(
-                'https://localhost:7036/api/User/forgot-password'
+                `${process.env.NEXT_PUBLIC_API_BE}/api/User/forgot-password`
             );
             url.searchParams.append('email', email);
 
@@ -61,7 +61,9 @@ const ForgotPassword = () => {
     const handleContinue = async () => {
         startLoading();
         try {
-            const url = new URL('https://localhost:7036/api/User/verify-code');
+            const url = new URL(
+                `${process.env.NEXT_PUBLIC_API_BE}/api/User/verify-code`
+            );
             url.searchParams.append('email', email);
             url.searchParams.append('code', code);
 
@@ -89,7 +91,7 @@ const ForgotPassword = () => {
         startLoading();
         try {
             const url = new URL(
-                'https://localhost:7036/api/User/reset-password'
+                `${process.env.NEXT_PUBLIC_API_BE}/api/User/reset-password`
             );
             url.searchParams.append('email', email);
             url.searchParams.append('newPass', newPass);

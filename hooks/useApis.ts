@@ -42,7 +42,9 @@ const useApis = () => {
     React.useEffect(() => {
         const fetchApis = async () => {
             try {
-                const response = await fetch(`https://localhost:7036/api/api`);
+                const response = await fetch(
+                    `${process.env.NEXT_PUBLIC_API_BE}/api/Api`
+                );
 
                 if (!response.ok) {
                     throw new Error(`Error: ${response.status}`);

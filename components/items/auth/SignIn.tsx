@@ -51,13 +51,16 @@ const SignIn: React.FC<SignInProps> = ({ isVisible, onClose }) => {
                 password,
             };
 
-            const res = await fetch(`https://localhost:7036/api/Auth/login`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(dataReq),
-            });
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_API_BE}/api/Auth/login`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(dataReq),
+                }
+            );
 
             const { message, data } = await res.json();
 

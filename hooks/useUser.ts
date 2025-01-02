@@ -38,7 +38,7 @@ const useUser = () => {
             if (storedUsername) {
                 try {
                     const response = await fetch(
-                        `https://localhost:7036/api/User/get-user-by-name?username=${storedUsername}`
+                        `${process.env.NEXT_PUBLIC_API_BE}/api/User/get-user-by-name?username=${storedUsername}`
                     );
 
                     if (!response.ok) {

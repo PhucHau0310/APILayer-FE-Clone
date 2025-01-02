@@ -44,6 +44,7 @@ const menu = [
 ];
 
 const Dashboard = () => {
+    console.log(process.env.NEXT_PUBLIC_API_BE);
     return (
         <div className="pb-16">
             <div className="flex flex-row items-center justify-between gap-4">

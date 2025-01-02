@@ -64,14 +64,17 @@ const Provider = () => {
                 overallSubscription: 0,
             };
 
-            const res = await fetch(`https://localhost:7036/api/Api`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                credentials: 'include', // Add this for cookies if needed
-                body: JSON.stringify(dataApi),
-            });
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_API_BE}/api/Api`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include', // Add this for cookies if needed
+                    body: JSON.stringify(dataApi),
+                }
+            );
 
             if (!res.ok) {
                 const errorData = await res.json();
@@ -93,7 +96,7 @@ const Provider = () => {
             };
 
             const resSecond = await fetch(
-                `https://localhost:7036/api/Api/documentation`,
+                `${process.env.NEXT_PUBLIC_API_BE}/api/Api/documentation`,
                 {
                     method: 'POST',
                     headers: {

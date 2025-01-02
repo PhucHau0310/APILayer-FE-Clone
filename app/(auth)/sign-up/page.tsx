@@ -41,7 +41,7 @@ const SignUp = () => {
             };
 
             const res = await fetch(
-                `https://localhost:7036/api/Auth/register`,
+                `${process.env.NEXT_PUBLIC_API_BE}/api/Auth/register`,
                 {
                     method: 'POST',
                     headers: {

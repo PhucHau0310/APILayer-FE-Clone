@@ -59,7 +59,7 @@ const Account = () => {
         startLoading();
         try {
             const url = new URL(
-                'https://localhost:7036/api/User/update-avatar-user'
+                `${process.env.NEXT_PUBLIC_API_BE}/api/User/update-avatar-user`
             );
 
             url.searchParams.append('username', data?.username ?? '');
@@ -89,7 +89,7 @@ const Account = () => {
         startLoading();
         try {
             const res = await fetch(
-                'https://localhost:7036/api/User/update-username',
+                `${process.env.NEXT_PUBLIC_API_BE}/api/User/update-username`,
                 {
                     method: 'PUT',
                     headers: {
@@ -134,7 +134,7 @@ const Account = () => {
         startLoading();
         try {
             const res = await fetch(
-                'https://localhost:7036/api/User/change-password',
+                `${process.env.NEXT_PUBLIC_API_BE}/api/User/change-password`,
                 {
                     method: 'POST',
                     headers: {
