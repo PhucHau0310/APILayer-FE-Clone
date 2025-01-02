@@ -65,8 +65,10 @@ interface API {
     };
 }
 
-interface Params {
-    slug: string;
+interface PageProps {
+    params: {
+        slug: string;
+    };
 }
 
 const Transition = React.forwardRef(function Transition(
@@ -78,9 +80,8 @@ const Transition = React.forwardRef(function Transition(
     return <Slide direction="down" ref={ref} {...props} />;
 });
 
-const ApiDetail = ({ params }: { params: Promise<Params> }) => {
-    const resolvedParams = React.use(params);
-    const { slug } = resolvedParams;
+const ApiDetail = ({ params }: PageProps) => {
+    const { slug } = params;
     const { data } = useApis();
     const { data: userData } = useUser();
     const [api, setApi] = React.useState<API | null>(null);
