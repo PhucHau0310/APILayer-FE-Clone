@@ -24,7 +24,7 @@ const menu = [
     {
         title: 'APIs',
         icon: faCode,
-        link: '/apis',
+        link: '/get-apis',
     },
     {
         title: 'Customers',

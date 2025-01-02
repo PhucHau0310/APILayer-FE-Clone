@@ -41,7 +41,7 @@ const About = () => {
                     alt="light"
                     width={500}
                     height={500}
-                    className="rounded-md"
+                    className="rounded-md w-full h-full"
                 />
             </div>
 
