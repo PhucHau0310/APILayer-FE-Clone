@@ -1,6 +1,3 @@
-import useUser from '@/hooks/useUser';
-import React from 'react';
-
 const Customers = () => {
     return (
         <div className="h-[700px]">
