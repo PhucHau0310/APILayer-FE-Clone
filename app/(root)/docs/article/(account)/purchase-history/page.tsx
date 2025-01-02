@@ -1,3 +1,5 @@
+'use client';
+
 import {
     faEnvelope,
     faHome,
@@ -9,8 +11,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from 'next/image';
 import SvgAccount from '@/public/img/abstract-shapes.svg';
 import Link from 'next/link';
-
-
 
 const PurchaseHistory = () => {
     return (
@@ -31,7 +31,7 @@ const PurchaseHistory = () => {
                 >
                     <span className="text-blue-500">Docs</span>
                 </Link>
-                
+
                 <span>/</span>
                 <Link
                     href="/docs"
@@ -39,9 +39,9 @@ const PurchaseHistory = () => {
                 >
                     <span className="text-blue-500">Account</span>
                 </Link>
-                
+
                 <span>/</span>
-                
+
                 <Link
                     href="/docs"
                     className="hover:opacity-90 flex flex-row items-center gap-2"
@@ -54,57 +54,76 @@ const PurchaseHistory = () => {
             </div>
 
             <div className="text-[#677788] mt-10 max-w-screen-lg mx-auto">
-                
-
                 <main id="content" role="main">
-            {/* purchase history */}
-            
-            <div className="card border p-4 p-md-7  w-lg-80 mx-lg-auto" data-bis-skin-checked="1">
-            <h1 className="text-[#1e2022] font-semibold text-3xl">
-                Purchase History
-                </h1>
-                
-                <p>Here you can download your invoices and see your purchase history</p>
-                <article>
-                    <p>You can reach your purchase history from the "Settings" menu.</p>
-                    <img src="https://assets.apilayer.com/docs/settings-menu-wkemfd089023j4ninf2u.png"
-                    alt="Settings Menu"
-                    className="w-100"/>
+                    {/* purchase history */}
 
-                    
-                    <p>You will be directed to the "Purchase History" page, where you can see all transactions. You can also download your invoice by clicking the "Invoice" button.</p>
-                    
-                    
-                    <img src="https://assets.apilayer.com/docs/purchase-history-ije89d2ijn3u8.png"
-                    alt="Settings Menu"
-                    className="w-100"/>
+                    <div
+                        className="card border p-4 p-md-7  w-lg-80 mx-lg-auto"
+                        data-bis-skin-checked="1"
+                    >
+                        <h1 className="text-[#1e2022] font-semibold text-3xl">
+                            Purchase History
+                        </h1>
 
-                </article>
+                        <p>
+                            Here you can download your invoices and see your
+                            purchase history
+                        </p>
+                        <article>
+                            <p>
+                                You can reach your purchase history from the
+                                "Settings" menu.
+                            </p>
+                            <img
+                                src="https://assets.apilayer.com/docs/settings-menu-wkemfd089023j4ninf2u.png"
+                                alt="Settings Menu"
+                                className="w-100"
+                            />
 
-                
+                            <p>
+                                You will be directed to the "Purchase History"
+                                page, where you can see all transactions. You
+                                can also download your invoice by clicking the
+                                "Invoice" button.
+                            </p>
 
+                            <img
+                                src="https://assets.apilayer.com/docs/purchase-history-ije89d2ijn3u8.png"
+                                alt="Settings Menu"
+                                className="w-100"
+                            />
+                        </article>
+                    </div>
 
-            </div>
+                    {/* End Purchase History */}
 
-            
-            {/* End Purchase History */}
+                    <div
+                        className="text-center border-top border-bottom my-6 py-6"
+                        id="feedback-block"
+                        data-bis-skin-checked="1"
+                    >
+                        <b>
+                            <h4 className="mb-4 text-black">
+                                Was this article helpful?
+                            </h4>
+                        </b>
 
-            <div className="text-center border-top border-bottom my-6 py-6" id="feedback-block" data-bis-skin-checked="1">
-                <b><h4 className="mb-4 text-black">
-                
-                Was this article helpful?
-                </h4></b>
-
-                <button type="button" id="feedback" className="btn btn-sm btn-primary btn-wide mb-2 mx-1" >Yes, thanks!</button>
-                <button type="button" id="feedback" className="btn btn-sm btn-soft-primary btn-wide mb-2 mx-1" >Not really</button>
-            </div>
-
-            
-
-            
-        </main>
-
-                
+                        <button
+                            type="button"
+                            id="feedback"
+                            className="btn btn-sm btn-primary btn-wide mb-2 mx-1"
+                        >
+                            Yes, thanks!
+                        </button>
+                        <button
+                            type="button"
+                            id="feedback"
+                            className="btn btn-sm btn-soft-primary btn-wide mb-2 mx-1"
+                        >
+                            Not really
+                        </button>
+                    </div>
+                </main>
             </div>
         </div>
     );
