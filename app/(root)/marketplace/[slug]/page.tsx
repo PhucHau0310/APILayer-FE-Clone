@@ -418,13 +418,11 @@ const ApiDetail = ({ params }: PageProps) => {
                             </h2>
 
                             <h2 className="text-[#677788] mt-3 text-lg">
-                                Price:{' '}
                                 <span className="text-black font-semibold">
                                     {api?.basePrice !== 0 &&
-                                        api?.basePrice.toLocaleString(
-                                            'vi-VN'
-                                        )}{' '}
-                                    VND
+                                        'Price: ' +
+                                            api?.basePrice.toLocaleString() +
+                                            'VND'}
                                 </span>
                             </h2>
                         </div>

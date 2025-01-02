@@ -1,6 +1,7 @@
 'use client';
 
 import Datepicker from '@/components/items/admin/Datepicker';
+import useApis from '@/hooks/useApis';
 import { faProductHunt } from '@fortawesome/free-brands-svg-icons';
 import {
     faCode,
@@ -9,42 +10,105 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PieChart } from '@mui/x-charts/PieChart';
+import React from 'react';
 
-const menu = [
-    {
-        name: 'Total APIs',
-        icon: faCode,
-        value: 10,
-    },
-    {
-        name: 'Payments',
-        icon: faMoneyCheck,
-        value: 12,
-    },
-    {
-        name: 'Subscriptions',
-        icon: faProductHunt,
-        value: 40,
-    },
-    {
-        name: 'Active Now',
-        icon: faCode,
-        value: 10,
-    },
-    {
-        name: 'Members',
-        icon: faUsers,
-        value: 5,
-    },
-    {
-        name: 'Total APIs',
-        icon: faCode,
-        value: 30,
-    },
-];
+interface Subscription {
+    id: number;
+    apiId: number;
+    userId: number;
+    subscriptionType: string;
+}
 
 const Dashboard = () => {
-    console.log(process.env.NEXT_PUBLIC_API_BE);
+    const { data: apis, loading, error } = useApis();
+    const [subscriptions, setSubscriptions] = React.useState<Subscription[]>(
+        []
+    );
+    const [users, setUsers] = React.useState<any[]>([]);
+
+    const menu = [
+        {
+            name: 'Total APIs',
+            icon: faCode,
+            value: apis?.length || 0,
+        },
+        {
+            name: 'Payments',
+            icon: faMoneyCheck,
+            value: 0,
+        },
+        {
+            name: 'Subscriptions',
+            icon: faProductHunt,
+            value: subscriptions?.length || 0,
+        },
+        {
+            name: 'Active Now',
+            icon: faCode,
+            value: users.length || 0,
+        },
+        {
+            name: 'Members',
+            icon: faUsers,
+            value: users.length || 0,
+        },
+        {
+            name: 'Total APIs',
+            icon: faCode,
+            value: apis?.length || 0,
+        },
+    ];
+
+    React.useEffect(() => {
+        const fetchUsers = async () => {
+            const res = await fetch(
+                `https://apilayer-hvg5bbfkf5hteqc7.southeastasia-01.azurewebsites.net/api/User/get-users`
+            );
+
+            if (res.ok) {
+                const data = await res.json();
+                console.log(data['data']['$values']);
+                setUsers(data['data']['$values']);
+            } else {
+                console.log('Failed');
+            }
+        };
+        fetchUsers();
+    }, []);
+
+    React.useEffect(() => {
+        const fetchApiSubs = async () => {
+            const res = await fetch(
+                `https://apilayer-hvg5bbfkf5hteqc7.southeastasia-01.azurewebsites.net/api/Subscription/user`
+            );
+
+            if (res.ok) {
+                const data = await res.json();
+                // console.log({ data });
+                setSubscriptions(data['$values']);
+            } else {
+                console.log('Failed');
+            }
+        };
+        fetchApiSubs();
+    }, []);
+
+    const apiSubscriptionsCount = subscriptions.reduce(
+        (acc: any, sub: Subscription) => {
+            acc[sub.apiId] = (acc[sub.apiId] || 0) + 1;
+            return acc;
+        },
+        {}
+    );
+
+    const topApis = Object.entries(apiSubscriptionsCount)
+        .sort((a, b) => Number(b[1]) - Number(a[1]))
+        .slice(0, 3)
+        .map(([apiId, count]) => {
+            const api = apis?.find((api) => api.id === parseInt(apiId));
+            return { name: api ? api.name : 'Unknown', count: Number(count) };
+        });
+
     return (
         <div className="pb-16">
             <div className="flex flex-row items-center justify-between gap-4">
@@ -79,20 +143,39 @@ const Dashboard = () => {
             <div className="flex flex-row items-start justify-between gap-4 mt-8">
                 <div className="bg-[#111C44] px-4 py-16 rounded-lg shadow-md mt-4 w-[40%]">
                     <h1 className="text-white font-semibold text-lg mb-6 text-center ">
-                        Top APIs Subscription
+                        Top 3 APIs Subscription
                     </h1>
                     <PieChart
+                        colors={['#7551FF', '#6AD2FF', '#39B8FF']}
                         series={[
                             {
-                                data: [
-                                    { id: 0, value: 10, label: 'series A' },
-                                    { id: 1, value: 15, label: 'series B' },
-                                    { id: 2, value: 20, label: 'series C' },
-                                ],
+                                data: topApis.map((api, index) => ({
+                                    id: index,
+                                    value: api.count,
+                                    label: api.name,
+                                })),
+                                highlightScope: {
+                                    fade: 'global',
+                                    highlight: 'item',
+                                },
+                                faded: {
+                                    innerRadius: 30,
+                                    additionalRadius: -30,
+                                    color: 'gray',
+                                },
+                                // valueFormatter,
                             },
                         ]}
                         width={400}
                         height={200}
+                        slotProps={{
+                            legend: {
+                                labelStyle: {
+                                    fill: 'white',
+                                    fontFamily: 'bold',
+                                },
+                            },
+                        }}
                     />
                 </div>
 
