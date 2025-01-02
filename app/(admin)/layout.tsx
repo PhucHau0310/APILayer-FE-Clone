@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import LeftSideBar from '@/components/items/admin/LeftSideBar';
 import TopBar from '@/components/items/admin/TopBar';
