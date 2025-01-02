@@ -5,9 +5,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import React from 'react';
 
-const OrderComplete = ({ params }: { params: Promise<{ slug: string }> }) => {
-    const resolvedParams = React.use(params);
-    const { slug } = resolvedParams;
+interface PageProps {
+    params: {
+        slug: string;
+    };
+}
+
+const OrderComplete = ({ params }: PageProps) => {
+    const { slug } = params;
     const [randomApiKey, setRandomApiKey] = React.useState('');
     const [copyText, setCopyText] = React.useState('Copy to Clipboard!');
 

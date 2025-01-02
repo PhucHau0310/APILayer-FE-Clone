@@ -9,9 +9,14 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-const CancelPage = ({ params }: { params: Promise<{ slug: string }> }) => {
-    const resolvedParams = React.use(params);
-    const { slug } = resolvedParams;
+interface PageProps {
+    params: {
+        slug: string;
+    };
+}
+
+const CancelPage = ({ params }: PageProps) => {
+    const { slug } = params;
     const { alert, showAlert, hideAlert } = useAlert();
     const [loading, startLoading, hideLoading] = useLoading();
     const router = useRouter();
