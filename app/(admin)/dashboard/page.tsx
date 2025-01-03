@@ -25,39 +25,7 @@ const Dashboard = () => {
         []
     );
     const [users, setUsers] = React.useState<any[]>([]);
-
-    const menu = [
-        {
-            name: 'Total APIs',
-            icon: faCode,
-            value: apis?.length || 0,
-        },
-        {
-            name: 'Payments',
-            icon: faMoneyCheck,
-            value: 0,
-        },
-        {
-            name: 'Subscriptions',
-            icon: faProductHunt,
-            value: subscriptions?.length || 0,
-        },
-        {
-            name: 'Active Now',
-            icon: faCode,
-            value: users.length || 0,
-        },
-        {
-            name: 'Members',
-            icon: faUsers,
-            value: users.length || 0,
-        },
-        {
-            name: 'Total APIs',
-            icon: faCode,
-            value: apis?.length || 0,
-        },
-    ];
+    const [payments, setPayments] = React.useState<any[]>([]);
 
     React.useEffect(() => {
         const fetchUsers = async () => {
@@ -67,7 +35,7 @@ const Dashboard = () => {
 
             if (res.ok) {
                 const data = await res.json();
-                console.log(data['data']['$values']);
+                // console.log(data['data']['$values']);
                 setUsers(data['data']['$values']);
             } else {
                 console.log('Failed');
@@ -93,6 +61,23 @@ const Dashboard = () => {
         fetchApiSubs();
     }, []);
 
+    React.useEffect(() => {
+        const fetchPayments = async () => {
+            const res = await fetch(
+                `https://apilayer-hvg5bbfkf5hteqc7.southeastasia-01.azurewebsites.net/api/Payment/payments`
+            );
+
+            if (res.ok) {
+                const data = await res.json();
+                console.log(data['data']['$values']);
+                setPayments(data['data']['$values']);
+            } else {
+                console.log('Failed');
+            }
+        };
+        fetchPayments();
+    }, []);
+
     const apiSubscriptionsCount = subscriptions.reduce(
         (acc: any, sub: Subscription) => {
             acc[sub.apiId] = (acc[sub.apiId] || 0) + 1;
@@ -108,6 +93,44 @@ const Dashboard = () => {
             const api = apis?.find((api) => api.id === parseInt(apiId));
             return { name: api ? api.name : 'Unknown', count: Number(count) };
         });
+
+    const totalPayments = payments.reduce((acc, payment) => {
+        acc += payment.amount;
+        return acc;
+    }, 0);
+
+    const menu = [
+        {
+            name: 'Total APIs',
+            icon: faCode,
+            value: apis?.length || 0,
+        },
+        {
+            name: 'Payments',
+            icon: faMoneyCheck,
+            value: totalPayments,
+        },
+        {
+            name: 'Subscriptions',
+            icon: faProductHunt,
+            value: subscriptions?.length || 0,
+        },
+        {
+            name: 'Active Now',
+            icon: faCode,
+            value: users.length || 0,
+        },
+        {
+            name: 'Members',
+            icon: faUsers,
+            value: users.length || 0,
+        },
+        {
+            name: 'Total APIs',
+            icon: faCode,
+            value: apis?.length || 0,
+        },
+    ];
 
     return (
         <div className="pb-16">
