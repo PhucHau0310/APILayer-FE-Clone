@@ -22,21 +22,23 @@ For JavaScript frameworks and web development:
 
 ## Getting Started
 
-First, run the development server:
+First, build the development server:
 
 ```bash
+npm run build
+```
+Then start the server using:
+```bash
+npm run start
+```
+If you encounter any errors when building, you can use:
+```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can start editing the page by modifying `page.tsx` or `layout.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
