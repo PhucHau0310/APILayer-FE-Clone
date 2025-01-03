@@ -3,6 +3,7 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import React from 'react';
 
 interface PageProps {
@@ -10,9 +11,12 @@ interface PageProps {
         slug: string;
     };
 }
-
-const OrderComplete = ({ params }: PageProps) => {
+// { params }: PageProps
+const OrderComplete = () => {
+    // const { slug } = params;
+    const params = useParams();
     const { slug } = params;
+
     const [randomApiKey, setRandomApiKey] = React.useState('');
     const [copyText, setCopyText] = React.useState('Copy to Clipboard!');
 
@@ -58,16 +62,25 @@ const OrderComplete = ({ params }: PageProps) => {
                     Thank you for your business with us! You can immediately
                     start using the{' '}
                     <Link
-                        href={`/marketplace/${slug.split('%20').join(' ')}`}
+                        href={`/marketplace/${
+                            typeof slug === 'string' &&
+                            slug.split('%20').join(' ')
+                        }`}
                         className="text-blue-700 hover:opacity-80 cursor-pointer"
                     >
-                        {slug.split('%20').join(' ')}
+                        {typeof slug === 'string' &&
+                            slug.split('%20').join(' ')}
                     </Link>{' '}
                     now. You will also receive an email confirmation with
                     details.
                 </p>
                 <button className="flex mx-auto text-white bg-gray-500 rounded-full px-10 py-4 font-semibold my-10 hover:shadow-lg hover:shadow-blue-600 transform transition duration-300 hover:-translate-y-2">
-                    <Link href={`/marketplace/${slug.split('%20').join(' ')}`}>
+                    <Link
+                        href={`/marketplace/${
+                            typeof slug === 'string' &&
+                            slug.split('%20').join(' ')
+                        }`}
+                    >
                         See API Documentation
                     </Link>
                 </button>

@@ -19,6 +19,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Rating } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import React from 'react';
 import {
     Button,
@@ -80,7 +81,12 @@ const Transition = React.forwardRef(function Transition(
     return <Slide direction="down" ref={ref} {...props} />;
 });
 
-const ApiDetail = ({ params }: PageProps) => {
+// { params }: PageProps
+
+const ApiDetail = () => {
+    // const { slug } = params;
+    const router = useRouter();
+    const params = useParams();
     const { slug } = params;
     const { data } = useApis();
     const { data: userData } = useUser();
@@ -89,7 +95,7 @@ const ApiDetail = ({ params }: PageProps) => {
     const [rating, setRating] = React.useState<number | null>(2);
     const [loading, startLoading, hideLoading] = useLoading();
     const { alert, showAlert, hideAlert } = useAlert();
-    const router = useRouter();
+
     const [textReview, setTextReview] = React.useState('');
     const [open, setOpen] = React.useState(false);
 
@@ -169,8 +175,18 @@ const ApiDetail = ({ params }: PageProps) => {
         };
     };
 
+    console.log(slug);
+
     React.useEffect(() => {
-        if (data) {
+        // if (data) {
+        //     const foundApi = data.find(
+        //         (api) => api.name === slug.split('%20').join(' ')
+        //     );
+        //     if (foundApi) {
+        //         setApi(foundApi);
+        //     }
+        // }
+        if (data && typeof slug === 'string') {
             const foundApi = data.find(
                 (api) => api.name === slug.split('%20').join(' ')
             );
@@ -391,7 +407,7 @@ const ApiDetail = ({ params }: PageProps) => {
                     <span className="text-[#677788] mx-1">/</span>
 
                     <span className="font-medium text-[#677788]">
-                        {slug
+                        {slug && typeof slug === 'string'
                             ? slug.split('%20').join(' ')
                             : 'No slug provided'}
                     </span>
