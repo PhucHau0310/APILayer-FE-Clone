@@ -1,3 +1,5 @@
+'use client';
+
 // hooks/useClickOutside.ts
 import { useEffect, RefObject } from 'react';
 
