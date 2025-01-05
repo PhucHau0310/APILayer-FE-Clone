@@ -31,6 +31,7 @@ import ImgRedEnvelope from '@/public/img/png/red-envelope.png';
 import ImgNewYear from '@/public/img/jpg/newyear.jpg';
 import AnimationLayer from '@/public/img/AnimationLayer.json';
 import Lottie from 'react-lottie-player';
+import useUserNotifications from '@/hooks/UseNoti';
 
 const Menu = [
     {
@@ -120,6 +121,7 @@ const Header = () => {
     const [isHoverNotification, setHoverNotification] = React.useState(false);
     const router = useRouter();
     const { data, loading, error } = useUser();
+    const { notifications, markAsRead } = useUserNotifications();
 
     useClickOutside(menuRef, () => {
         setClickMenu(null);
@@ -358,46 +360,37 @@ const Header = () => {
                             {isHoverNotification && (
                                 <div className="bg-white shadow-md absolute top-[85%] right-0 w-[260px] rounded-sm transition-all duration-500">
                                     <div className="bg-red-400 flex flex-row items-center justify-between py-2 px-4 rounded-tl-sm rounded-tr-sm">
-                                        <h3 className="text-white">
-                                            Notifications
-                                        </h3>
-                                        <FontAwesomeIcon
-                                            icon={faGear}
-                                            size="1x"
-                                            color="white"
-                                        />
+                                        <h3 className="text-white">Notifications</h3>
+                                        <FontAwesomeIcon icon={faGear} size="1x" color="white" />
                                     </div>
 
-                                    <div className="py-2 px-4 hover:bg-[#f0f0f0] transition-all duration-300">
-                                        <div className="flex flex-row items-center gap-3 py-2">
-                                            <FontAwesomeIcon
-                                                icon={faCircleUser}
-                                                size="2x"
-                                            />
-
-                                            <div>
-                                                <h3>Nguyen Hau</h3>
-                                                <p>4 hours ago</p>
+                                    <div className="max-h-[400px] overflow-y-auto">
+                                        {notifications?.map((notification) => (
+                                            <div
+                                                key={notification.id}
+                                                className={`py-2 px-4 hover:bg-[#f0f0f0] transition-all duration-300 ${!notification.isRead ? 'bg-blue-50' : ''}`}
+                                                onClick={() => markAsRead(notification.id)}
+                                            >
+                                                <div className="flex flex-row items-center gap-3 py-2">
+                                                    <FontAwesomeIcon icon={faCircleUser} size="2x" />
+                                                    <div>
+                                                        <h3>{notification.message}</h3>
+                                                        <p className="text-sm text-gray-500">
+                                                            {new Date(notification.createdAt).toLocaleDateString('vi-VN', {
+                                                                hour: '2-digit',
+                                                                minute: '2-digit'
+                                                            })}
+                                                        </p>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div className="py-2 px-4 hover:bg-[#f0f0f0] transition-all duration-300">
-                                        <div className="flex flex-row items-center gap-3 py-2">
-                                            <FontAwesomeIcon
-                                                icon={faCircleUser}
-                                                size="2x"
-                                            />
+                                        ))}
 
-                                            <div>
-                                                <h3>Nguyen Hau</h3>
-                                                <p>4 hours ago</p>
+                                        {notifications?.length === 0 && (
+                                            <div className="py-4 px-4 text-center text-gray-500">
+                                                No notifications
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div className="py-2 px-4 hover:bg-[#f0f0f0] transition-all duration-300 border-t border-[#f0f0f0]">
-                                        <p className="text-green-500 py-2 text-center">
-                                            See all recent activity
-                                        </p>
+                                        )}
                                     </div>
                                 </div>
                             )}

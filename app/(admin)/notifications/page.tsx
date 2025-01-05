@@ -21,25 +21,7 @@ import useUser from '@/hooks/useUser';
 import useLoading from '@/hooks/useLoading';
 import useAlert from '@/hooks/useAlert';
 import Alert from '@/components/items/Alert';
-
-interface Notification {
-    id: number;
-    message: string;
-    isRead: boolean;
-    createdAt: string;
-    senderId: number;
-    receiverId: number;
-    $values: [
-        {
-            id: number;
-            message: string;
-            isRead: boolean;
-            createdAt: string;
-            senderId: number;
-            receiverId: number;
-        }
-    ];
-}
+import {Notification} from '@/hooks/UseNoti';
 
 interface NotificationFormData {
     message: string;
@@ -71,7 +53,7 @@ const Notifications = () => {
     useEffect(() => {
         const newConnection = new HubConnectionBuilder()
             .withUrl(
-                'https://apilayer-hvg5bbfkf5hteqc7.southeastasia-01.azurewebsites.net/notificationhub'
+                `${process.env.NEXT_PUBLIC_API_BE}/notificationhub`
             )
             .withAutomaticReconnect()
             .build();
@@ -105,7 +87,7 @@ const Notifications = () => {
 
             try {
                 const response = await fetch(
-                    `https://apilayer-hvg5bbfkf5hteqc7.southeastasia-01.azurewebsites.net/api/Notification/all`
+                    `${process.env.NEXT_PUBLIC_API_BE}/api/Notification/all`
                 );
                 if (response.ok) {
                     const data = await response.json();
@@ -154,7 +136,7 @@ const Notifications = () => {
 
         try {
             const response = await fetch(
-                'https://apilayer-hvg5bbfkf5hteqc7.southeastasia-01.azurewebsites.net/api/Notification/send',
+                `${process.env.NEXT_PUBLIC_API_BE}/api/Notification/send`,
                 {
                     method: 'POST',
                     headers: {
@@ -186,7 +168,7 @@ const Notifications = () => {
     const handleMarkAsRead = async (id: number) => {
         try {
             const response = await fetch(
-                `https://apilayer-hvg5bbfkf5hteqc7.southeastasia-01.azurewebsites.net/api/Notification/${id}/read`,
+                `${process.env.NEXT_PUBLIC_API_BE}/api/Notification/${id}/read`,
                 {
                     method: 'PUT',
                 }
