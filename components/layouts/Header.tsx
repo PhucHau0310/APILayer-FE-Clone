@@ -122,6 +122,7 @@ const Header = () => {
     const router = useRouter();
     const { data, loading, error } = useUser();
     const { notifications, markAsRead } = useUserNotifications();
+    const [users, setUsers] = React.useState<any>([]);
 
     useClickOutside(menuRef, () => {
         setClickMenu(null);
@@ -132,6 +133,33 @@ const Header = () => {
             setLogined(true);
         }
     }, [isLogined]);
+
+    React.useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const res = await fetch(
+                    'https://apilayer-hvg5bbfkf5hteqc7.southeastasia-01.azurewebsites.net/api/User/get-users'
+                );
+                if (res.ok) {
+                    const data = await res.json();
+                    const userList = data['data']['$values'].map(
+                        (user: any) => ({
+                            id: user.id,
+                            avatar: user.avatar,
+                            username: user.username,
+                        })
+                    );
+                    // setUsers(data['data']['$values']);
+                    setUsers(userList);
+                } else {
+                    console.error('Failed to fetch users');
+                }
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        };
+        fetchUsers();
+    }, []);
 
     const hanldeLogOut = () => {
         localStorage.removeItem('accessToken');
@@ -360,26 +388,70 @@ const Header = () => {
                             {isHoverNotification && (
                                 <div className="bg-white shadow-md absolute top-[85%] right-0 w-[260px] rounded-sm transition-all duration-500">
                                     <div className="bg-red-400 flex flex-row items-center justify-between py-2 px-4 rounded-tl-sm rounded-tr-sm">
-                                        <h3 className="text-white">Notifications</h3>
-                                        <FontAwesomeIcon icon={faGear} size="1x" color="white" />
+                                        <h3 className="text-white">
+                                            Notifications
+                                        </h3>
+                                        <FontAwesomeIcon
+                                            icon={faGear}
+                                            size="1x"
+                                            color="white"
+                                        />
                                     </div>
 
                                     <div className="max-h-[400px] overflow-y-auto">
                                         {notifications?.map((notification) => (
                                             <div
                                                 key={notification.id}
-                                                className={`py-2 px-4 hover:bg-[#f0f0f0] transition-all duration-300 ${!notification.isRead ? 'bg-blue-50' : ''}`}
-                                                onClick={() => markAsRead(notification.id)}
+                                                className={`py-2 px-4 hover:bg-[#f0f0f0] transition-all duration-300 ${
+                                                    !notification.isRead
+                                                        ? 'bg-blue-50'
+                                                        : ''
+                                                }`}
+                                                onClick={() =>
+                                                    markAsRead(notification.id)
+                                                }
                                             >
                                                 <div className="flex flex-row items-center gap-3 py-2">
-                                                    <FontAwesomeIcon icon={faCircleUser} size="2x" />
+                                                    {/* <FontAwesomeIcon
+                                                        icon={faCircleUser}
+                                                        size="2x"
+                                                    /> */}
+                                                    {users.map(
+                                                        (user: any) =>
+                                                            user.id ===
+                                                                notification.senderId && (
+                                                                <div className="flex flex-col items-center gap-2">
+                                                                    <img
+                                                                        src={
+                                                                            user.avatar
+                                                                        }
+                                                                        alt="avatar"
+                                                                        className="w-9 h-9 rounded-full"
+                                                                    />
+                                                                    <p className="text-black text-xs font-semibold">
+                                                                        {
+                                                                            user.username
+                                                                        }
+                                                                    </p>
+                                                                </div>
+                                                            )
+                                                    )}
                                                     <div>
-                                                        <h3>{notification.message}</h3>
+                                                        <h3>
+                                                            {
+                                                                notification.message
+                                                            }
+                                                        </h3>
                                                         <p className="text-sm text-gray-500">
-                                                            {new Date(notification.createdAt).toLocaleDateString('vi-VN', {
-                                                                hour: '2-digit',
-                                                                minute: '2-digit'
-                                                            })}
+                                                            {new Date(
+                                                                notification.createdAt
+                                                            ).toLocaleDateString(
+                                                                'vi-VN',
+                                                                {
+                                                                    hour: '2-digit',
+                                                                    minute: '2-digit',
+                                                                }
+                                                            )}
                                                         </p>
                                                     </div>
                                                 </div>
