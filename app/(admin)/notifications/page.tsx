@@ -21,7 +21,7 @@ import useUser from '@/hooks/useUser';
 import useLoading from '@/hooks/useLoading';
 import useAlert from '@/hooks/useAlert';
 import Alert from '@/components/items/Alert';
-import {Notification} from '@/hooks/UseNoti';
+import { Notification } from '@/hooks/UseNoti';
 
 interface NotificationFormData {
     message: string;
@@ -53,7 +53,7 @@ const Notifications = () => {
     useEffect(() => {
         const newConnection = new HubConnectionBuilder()
             .withUrl(
-                `${process.env.NEXT_PUBLIC_API_BE}/notificationhub`
+                `https://apilayer-hvg5bbfkf5hteqc7.southeastasia-01.azurewebsites.net/notificationhub`
             )
             .withAutomaticReconnect()
             .build();
@@ -87,7 +87,7 @@ const Notifications = () => {
 
             try {
                 const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_BE}/api/Notification/all`
+                    `https://apilayer-hvg5bbfkf5hteqc7.southeastasia-01.azurewebsites.net/api/Notification/all`
                 );
                 if (response.ok) {
                     const data = await response.json();
@@ -136,7 +136,7 @@ const Notifications = () => {
 
         try {
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_API_BE}/api/Notification/send`,
+                `https://apilayer-hvg5bbfkf5hteqc7.southeastasia-01.azurewebsites.net/api/Notification/send`,
                 {
                     method: 'POST',
                     headers: {
@@ -168,7 +168,7 @@ const Notifications = () => {
     const handleMarkAsRead = async (id: number) => {
         try {
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_API_BE}/api/Notification/${id}/read`,
+                `https://apilayer-hvg5bbfkf5hteqc7.southeastasia-01.azurewebsites.net/api/Notification/${id}/read`,
                 {
                     method: 'PUT',
                 }

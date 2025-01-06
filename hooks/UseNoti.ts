@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import useUser from "@/hooks/useUser";
+import useUser from '@/hooks/useUser';
 
 export interface Notification {
     id: number;
@@ -13,7 +13,7 @@ export interface Notification {
     $values?: Notification[];
 }
 
-export default function useUserNotifications (){
+export default function useUserNotifications() {
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
@@ -25,7 +25,7 @@ export default function useUserNotifications (){
         setLoading(true);
         try {
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_API_BE}/api/Notification/${user.username}`
+                `https://apilayer-hvg5bbfkf5hteqc7.southeastasia-01.azurewebsites.net/api/Notification/${user.username}`
             );
             if (response.ok) {
                 const data = await response.json();
@@ -45,7 +45,7 @@ export default function useUserNotifications (){
     const markAsRead = async (id: number) => {
         try {
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_API_BE}/api/Notification/${id}/read`,
+                `https://apilayer-hvg5bbfkf5hteqc7.southeastasia-01.azurewebsites.net/api/Notification/${id}/read`,
                 {
                     method: 'PUT',
                 }
@@ -75,6 +75,6 @@ export default function useUserNotifications (){
         loading,
         error,
         markAsRead,
-        refetch: fetchNotifications
+        refetch: fetchNotifications,
     };
-};
+}
