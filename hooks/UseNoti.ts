@@ -25,7 +25,7 @@ export default function useUserNotifications() {
         setLoading(true);
         try {
             const response = await fetch(
-                `https://apilayer-hvg5bbfkf5hteqc7.southeastasia-01.azurewebsites.net/api/Notification/${user.username}`
+                `${process.env.NEXT_PUBLIC_API_BE}/api/Notification/${user.username}`
             );
             if (response.ok) {
                 const data = await response.json();
@@ -45,7 +45,7 @@ export default function useUserNotifications() {
     const markAsRead = async (id: number) => {
         try {
             const response = await fetch(
-                `https://apilayer-hvg5bbfkf5hteqc7.southeastasia-01.azurewebsites.net/api/Notification/${id}/read`,
+                `${process.env.NEXT_PUBLIC_API_BE}/api/Notification/${id}/read`,
                 {
                     method: 'PUT',
                 }

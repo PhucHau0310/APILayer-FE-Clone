@@ -29,7 +29,7 @@ const FAQs = () => {
     const fetchFAQs = async () => {
         try {
             const response = await fetch(
-                'https://apilayer-hvg5bbfkf5hteqc7.southeastasia-01.azurewebsites.net/api/FAQ/get-faqs'
+                `${process.env.NEXT_PUBLIC_API_BE}/api/FAQ/get-faqs`
             );
             const data = await response.json();
             if (response.ok) {
@@ -45,7 +45,7 @@ const FAQs = () => {
     const handleDelete = async (id: any) => {
         try {
             const response = await fetch(
-                `https://apilayer-hvg5bbfkf5hteqc7.southeastasia-01.azurewebsites.net/api/FAQ/delete-faq?id=${id}`,
+                `${process.env.NEXT_PUBLIC_API_BE}/api/FAQ/delete-faq?id=${id}`,
                 {
                     method: 'DELETE',
                 }
@@ -74,7 +74,7 @@ const FAQs = () => {
     const handleEditSave = async () => {
         try {
             const response = await fetch(
-                `https://apilayer-hvg5bbfkf5hteqc7.southeastasia-01.azurewebsites.net/api/FAQ/update-faq?id=${selectedFAQ.id}`,
+                `${process.env.NEXT_PUBLIC_API_BE}/api/FAQ/update-faq?id=${selectedFAQ.id}`,
                 {
                     method: 'PUT',
                     headers: {
@@ -84,6 +84,7 @@ const FAQs = () => {
                         question: selectedFAQ.question,
                         answer: selectedFAQ.answer,
                         category: selectedFAQ.category,
+                        userId: selectedFAQ.userId,
                     }),
                 }
             );
@@ -110,25 +111,28 @@ const FAQs = () => {
                         <Grid item xs={12} key={faq.id}>
                             <Paper elevation={3} sx={{ p: 2 }}>
                                 <Typography variant="h6">
-                                    {faq.question}
+                                    Question: {faq.question}
                                 </Typography>
                                 <Typography
                                     variant="body1"
-                                    color="text.secondary"
-                                >
-                                    {faq.answer}
+                                    color="text.secondary">
+                                    Answer: {faq.answer}
                                 </Typography>
                                 <Typography
                                     variant="caption"
-                                    color="text.secondary"
-                                >
-                                    Category: {faq.category}
+                                    color="text.secondary">Category: {faq.category}
+                                </Typography>
+
+                                <Typography
+                                    variant="caption"
+                                    color="text">
+                                    <br />
+                                    Created by: {faq.user.username}
                                 </Typography>
                                 <Box mt={2}>
                                     <IconButton
                                         color="primary"
-                                        onClick={() => handleEditOpen(faq)}
-                                    >
+                                        onClick={() => handleEditOpen(faq)}>
                                         <EditIcon />
                                     </IconButton>
                                     <IconButton
